@@ -53,6 +53,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.lossantos.pontoaponto.feature.auth.components.AuthComponents
 
 class LoginWithEmailAndPasswordScreen(private val navController: NavController? = null) {
     @OptIn(ExperimentalMaterial3Api::class)
@@ -61,7 +62,7 @@ class LoginWithEmailAndPasswordScreen(private val navController: NavController? 
         Scaffold(topBar = {
             TopAppBar(title = { /*TODO*/ }, navigationIcon = {
                 if (navController?.previousBackStackEntry != null) {
-                    IconButton(onClick = { navController?.popBackStack() }) {
+                    IconButton(onClick = { navController.popBackStack() }) {
                         Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Voltar")
                     }
                 }
@@ -78,117 +79,15 @@ class LoginWithEmailAndPasswordScreen(private val navController: NavController? 
                     .fillMaxWidth()
             )
             {
-                Header()
+                AuthComponents().Header(
+                    title = "Bem-vindo novamente!",
+                    subtitle = "Por favor, insira seu e-mail e senha para entrar."
+                )
                 Spacer(modifier = Modifier.height(10.dp))
                 Fields()
                 Spacer(modifier = Modifier.weight(1f))
                 Login()
             }
-        }
-    }
-
-    @Composable
-    fun Header(modifier: Modifier = Modifier) {
-        Column(
-            verticalArrangement = Arrangement.spacedBy(10.dp),
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Text(
-                "Bem-vindo novamente!",
-                style = MaterialTheme.typography.labelLarge,
-                modifier = modifier
-            )
-            Text(
-                text = "Por favor, insira seu e-mail e senha para entrar.",
-                style = MaterialTheme.typography.labelSmall,
-                modifier = modifier
-            )
-        }
-    }
-
-    @OptIn(ExperimentalMaterial3Api::class)
-    @Composable
-    fun EmailField(modifier: Modifier = Modifier) {
-        var email by remember { mutableStateOf("") }
-
-        Column(
-            verticalArrangement = Arrangement.spacedBy(10.dp),
-            modifier = modifier.padding(vertical = 10.dp).fillMaxWidth()
-        ) {
-            Text(
-                "E-mail",
-                style = MaterialTheme.typography.labelSmall.copy(fontWeight = FontWeight.SemiBold)
-            )
-            TextField(
-                value = email,
-                onValueChange = { email = it },
-                label = {
-                    Text(
-                        "E-mail",
-                        style = MaterialTheme.typography.labelSmall,
-                        color = Color(0xFF7D7D7D)
-                    )
-                },
-                colors = TextFieldDefaults.textFieldColors(
-                    containerColor = Color(0xFFFAFAFA),
-                    disabledIndicatorColor = Color.Transparent,
-                    errorIndicatorColor = Color.Transparent,
-                    focusedIndicatorColor = Color.Transparent,
-                    unfocusedIndicatorColor = Color.Transparent
-                ),
-                shape = RoundedCornerShape(8.dp),
-                singleLine = true,
-                modifier = modifier.fillMaxWidth()
-            )
-        }
-    }
-
-    @OptIn(ExperimentalMaterial3Api::class)
-    @Composable
-    fun PasswordField(modifier: Modifier = Modifier) {
-        var password by remember { mutableStateOf("") }
-        var passwordVisible by remember { mutableStateOf(false) }
-
-        Column(
-            verticalArrangement = Arrangement.spacedBy(10.dp),
-            modifier = modifier.padding(vertical = 10.dp).fillMaxWidth()
-        ) {
-            Text(
-                "Senha",
-                style = MaterialTheme.typography.labelSmall.copy(fontWeight = FontWeight.SemiBold)
-            )
-            TextField(
-                value = password,
-                onValueChange = { password = it },
-                label = {
-                    Text(
-                        "Senha",
-                        style = MaterialTheme.typography.labelSmall,
-                        color = Color(0xFF7D7D7D)
-                    )
-                },
-                colors = TextFieldDefaults.textFieldColors(
-                    containerColor = Color(0xFFFAFAFA),
-                    disabledIndicatorColor = Color.Transparent,
-                    errorIndicatorColor = Color.Transparent,
-                    focusedIndicatorColor = Color.Transparent,
-                    unfocusedIndicatorColor = Color.Transparent
-                ),
-                visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
-                shape = RoundedCornerShape(8.dp),
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-                singleLine = true,
-                trailingIcon = {
-                    val image =
-                        if (passwordVisible) Icons.Filled.Visibility else Icons.Filled.VisibilityOff
-                    val description = if (passwordVisible) "Esconder a senha" else "Mostrar senha"
-
-                    IconButton(onClick = { passwordVisible = !passwordVisible }) {
-                        Icon(imageVector = image, description, modifier = modifier.size(20.dp))
-                    }
-                },
-                modifier = modifier.fillMaxWidth()
-            )
         }
     }
 
@@ -230,9 +129,7 @@ class LoginWithEmailAndPasswordScreen(private val navController: NavController? 
                         start = offset,
                         end = offset
                     ).firstOrNull()?.let {
-                        println("Clicou em ${it.item}")
-
-                        // todo: redirecionar para página de esqueci a senha
+                        navController?.navigate("forgot_password")
                     }
                 })
         }
@@ -240,7 +137,9 @@ class LoginWithEmailAndPasswordScreen(private val navController: NavController? 
 
     @Composable
     fun FieldDivider(modifier: Modifier = Modifier) {
-        Column(modifier = modifier.padding(vertical = 10.dp).fillMaxWidth()) {
+        Column(modifier = modifier
+            .padding(vertical = 10.dp)
+            .fillMaxWidth()) {
             Divider(
                 thickness = 1.dp,
                 color = Color(0xFFcccccc),
@@ -295,8 +194,8 @@ class LoginWithEmailAndPasswordScreen(private val navController: NavController? 
             verticalArrangement = Arrangement.spacedBy(5.dp),
             modifier = Modifier.fillMaxWidth()
         ) {
-            EmailField()
-            PasswordField()
+            AuthComponents().EmailField()
+            AuthComponents().PasswordField()
             RememberMeField()
             FieldDivider()
             CreateAccount()
@@ -321,7 +220,6 @@ class LoginWithEmailAndPasswordScreen(private val navController: NavController? 
             )
         }
     }
-
 }
 
 @Preview(showBackground = true)
