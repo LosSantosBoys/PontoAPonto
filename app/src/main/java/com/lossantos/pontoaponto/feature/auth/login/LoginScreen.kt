@@ -44,7 +44,9 @@ class LoginScreen(private val navController: NavController? = null) {
                     10.dp,
                     alignment = Alignment.CenterVertically
                 ), horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier.padding(it)
+                modifier = Modifier
+                    .padding(it)
+                    .padding(horizontal = 24.dp, vertical = 30.dp)
             )
             {
                 Spacer(modifier = Modifier.weight(1f))
