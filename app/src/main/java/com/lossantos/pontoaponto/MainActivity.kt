@@ -23,14 +23,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             PontoAPontoTheme {
                 // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(horizontal = 24.dp, vertical = 30.dp),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    MyApp()
-                }
+                MyApp()
             }
         }
     }
