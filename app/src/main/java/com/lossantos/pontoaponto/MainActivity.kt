@@ -15,6 +15,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.lossantos.pontoaponto.feature.auth.login.LoginScreen
 import com.lossantos.pontoaponto.feature.auth.login.LoginWithEmailAndPasswordScreen
+import com.lossantos.pontoaponto.feature.auth.forgotpassword.ForgotPasswordScreen
 import com.lossantos.pontoaponto.ui.theme.PontoAPontoTheme
 
 class MainActivity : ComponentActivity() {
@@ -36,6 +37,7 @@ class MainActivity : ComponentActivity() {
             composable("login_with_email_and_password") {
                 LoginWithEmailAndPasswordScreen(navController = navController).Screen()
             }
+            composable("forgot_password") { ForgotPasswordScreen(navController = navController).Screen() }
         }
     }
 }
