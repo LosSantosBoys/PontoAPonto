@@ -16,6 +16,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Button
@@ -30,6 +32,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -55,7 +58,15 @@ class LoginWithEmailAndPasswordScreen(private val navController: NavController? 
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     fun Screen() {
-        Scaffold { it ->
+        Scaffold(topBar = {
+            TopAppBar(title = { /*TODO*/ }, navigationIcon = {
+                if (navController?.previousBackStackEntry != null) {
+                    IconButton(onClick = { navController?.popBackStack() }) {
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Voltar")
+                    }
+                }
+            }, modifier = Modifier.padding(0.dp))
+        }) { it ->
             Column(
                 verticalArrangement = Arrangement.spacedBy(
                     10.dp,
@@ -64,6 +75,7 @@ class LoginWithEmailAndPasswordScreen(private val navController: NavController? 
                 modifier = Modifier
                     .padding(it)
                     .padding(horizontal = 24.dp, vertical = 30.dp)
+                    .fillMaxWidth()
             )
             {
                 Header()
@@ -77,7 +89,10 @@ class LoginWithEmailAndPasswordScreen(private val navController: NavController? 
 
     @Composable
     fun Header(modifier: Modifier = Modifier) {
-        Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
+        Column(
+            verticalArrangement = Arrangement.spacedBy(10.dp),
+            modifier = Modifier.fillMaxWidth()
+        ) {
             Text(
                 "Bem-vindo novamente!",
                 style = MaterialTheme.typography.labelLarge,
@@ -98,7 +113,7 @@ class LoginWithEmailAndPasswordScreen(private val navController: NavController? 
 
         Column(
             verticalArrangement = Arrangement.spacedBy(10.dp),
-            modifier = modifier.padding(vertical = 10.dp)
+            modifier = modifier.padding(vertical = 10.dp).fillMaxWidth()
         ) {
             Text(
                 "E-mail",
@@ -122,7 +137,8 @@ class LoginWithEmailAndPasswordScreen(private val navController: NavController? 
                     unfocusedIndicatorColor = Color.Transparent
                 ),
                 shape = RoundedCornerShape(8.dp),
-                singleLine = true
+                singleLine = true,
+                modifier = modifier.fillMaxWidth()
             )
         }
     }
@@ -135,7 +151,7 @@ class LoginWithEmailAndPasswordScreen(private val navController: NavController? 
 
         Column(
             verticalArrangement = Arrangement.spacedBy(10.dp),
-            modifier = modifier.padding(vertical = 10.dp)
+            modifier = modifier.padding(vertical = 10.dp).fillMaxWidth()
         ) {
             Text(
                 "Senha",
@@ -170,7 +186,8 @@ class LoginWithEmailAndPasswordScreen(private val navController: NavController? 
                     IconButton(onClick = { passwordVisible = !passwordVisible }) {
                         Icon(imageVector = image, description, modifier = modifier.size(20.dp))
                     }
-                }
+                },
+                modifier = modifier.fillMaxWidth()
             )
         }
     }
@@ -223,8 +240,12 @@ class LoginWithEmailAndPasswordScreen(private val navController: NavController? 
 
     @Composable
     fun FieldDivider(modifier: Modifier = Modifier) {
-        Column(modifier = modifier.padding(vertical = 10.dp)) {
-            Divider(thickness = 1.dp, color = Color(0xFFcccccc), modifier = modifier.padding(horizontal = 24.dp))
+        Column(modifier = modifier.padding(vertical = 10.dp).fillMaxWidth()) {
+            Divider(
+                thickness = 1.dp,
+                color = Color(0xFFcccccc),
+                modifier = modifier.padding(horizontal = 24.dp)
+            )
         }
     }
 
@@ -233,7 +254,9 @@ class LoginWithEmailAndPasswordScreen(private val navController: NavController? 
         Column(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = modifier.padding(10.dp).fillMaxWidth()
+            modifier = modifier
+                .padding(10.dp)
+                .fillMaxWidth()
         ) {
             val annotatedText = buildAnnotatedString {
                 withStyle(style = MaterialTheme.typography.labelSmall.toSpanStyle()) {
@@ -268,7 +291,10 @@ class LoginWithEmailAndPasswordScreen(private val navController: NavController? 
 
     @Composable
     fun Fields(modifier: Modifier = Modifier) {
-        Column(verticalArrangement = Arrangement.spacedBy(5.dp)) {
+        Column(
+            verticalArrangement = Arrangement.spacedBy(5.dp),
+            modifier = Modifier.fillMaxWidth()
+        ) {
             EmailField()
             PasswordField()
             RememberMeField()
