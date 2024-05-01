@@ -33,20 +33,14 @@ import androidx.compose.ui.unit.dp
 class AuthComponents {
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
-    fun EmailField(modifier: Modifier = Modifier, allowCPF: Boolean = false) {
-        var email by remember { mutableStateOf("") }
-
+    fun EmailField(email: String, onEmailChange: (String) -> Unit, isError: Boolean, modifier: Modifier = Modifier, allowCPF: Boolean = false) {
         Column(
             verticalArrangement = Arrangement.spacedBy(10.dp),
             modifier = modifier
                 .padding(vertical = 10.dp)
                 .fillMaxWidth()
         ) {
-            var fieldLabel = "E-mail"
-
-            if (allowCPF) {
-                fieldLabel = "E-mail ou CPF"
-            }
+            val fieldLabel = if (allowCPF) "E-mail ou CPF" else "E-mail"
 
             Text(
                 fieldLabel,
@@ -54,16 +48,16 @@ class AuthComponents {
             )
             TextField(
                 value = email,
-                onValueChange = { email = it },
+                onValueChange = onEmailChange,
                 label = {
                     Text(
-                        fieldLabel,
+                        if (isError) "E-mail inválido" else fieldLabel,
                         style = MaterialTheme.typography.labelSmall,
-                        color = Color(0xFF7D7D7D)
+                        color = if (isError) Color(0xFFE30000) else Color(0xFF7D7D7D)
                     )
                 },
                 colors = TextFieldDefaults.textFieldColors(
-                    containerColor = Color(0xFFFAFAFA),
+                    containerColor = if (isError) Color(0xFFFFF2F4) else Color(0xFFFAFAFA),
                     disabledIndicatorColor = Color.Transparent,
                     errorIndicatorColor = Color.Transparent,
                     focusedIndicatorColor = Color.Transparent,

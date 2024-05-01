@@ -21,6 +21,10 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -35,6 +39,9 @@ class ForgotPasswordScreen(private val navController: NavController? = null) {
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     fun Screen() {
+        var email by remember { mutableStateOf("") }
+        var emailError by remember { mutableStateOf(false) }
+
         Scaffold(topBar = {
             TopAppBar(title = { /*TODO*/ }, navigationIcon = {
                 if (navController?.previousBackStackEntry != null) {
@@ -59,7 +66,10 @@ class ForgotPasswordScreen(private val navController: NavController? = null) {
                     subtitle = "Por favor, insira seu e-mail ou seu CPF."
                 )
                 Spacer(modifier = Modifier.height(10.dp))
-                Fields()
+                Fields(email, { newEmail ->
+                    email = newEmail
+                    emailError = !isEmailValid(newEmail)
+                }, isError = emailError)
                 Spacer(modifier = Modifier.weight(1f))
                 ForgotPasswordButton()
             }
@@ -67,13 +77,27 @@ class ForgotPasswordScreen(private val navController: NavController? = null) {
     }
 
     @Composable
-    fun Fields(modifier: Modifier = Modifier) {
+    fun Fields(
+        email: String,
+        onEmailChange: (String) -> Unit,
+        isError: Boolean,
+        modifier: Modifier = Modifier
+    ) {
         Column(
             verticalArrangement = Arrangement.spacedBy(5.dp),
             modifier = Modifier.fillMaxWidth()
         ) {
-            AuthComponents().EmailField(allowCPF = true)
+            AuthComponents().EmailField(
+                email = email,
+                onEmailChange = onEmailChange,
+                isError = isError,
+                allowCPF = true
+            )
         }
+    }
+
+    private fun isEmailValid(email: String): Boolean {
+        return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
     }
 
     @Composable

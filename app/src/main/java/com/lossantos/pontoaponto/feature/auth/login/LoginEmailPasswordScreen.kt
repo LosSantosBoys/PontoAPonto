@@ -59,6 +59,9 @@ class LoginWithEmailAndPasswordScreen(private val navController: NavController? 
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     fun Screen() {
+        var email by remember { mutableStateOf("") }
+        var emailError by remember { mutableStateOf(false) }
+
         Scaffold(topBar = {
             TopAppBar(title = { /*TODO*/ }, navigationIcon = {
                 if (navController?.previousBackStackEntry != null) {
@@ -84,7 +87,10 @@ class LoginWithEmailAndPasswordScreen(private val navController: NavController? 
                     subtitle = "Por favor, insira seu e-mail e senha para entrar."
                 )
                 Spacer(modifier = Modifier.height(10.dp))
-                Fields()
+                Fields(email, { newEmail ->
+                    email = newEmail
+                    emailError = !isEmailValid(newEmail)
+                }, isError = emailError)
                 Spacer(modifier = Modifier.weight(1f))
                 Login()
             }
@@ -137,9 +143,11 @@ class LoginWithEmailAndPasswordScreen(private val navController: NavController? 
 
     @Composable
     fun FieldDivider(modifier: Modifier = Modifier) {
-        Column(modifier = modifier
-            .padding(vertical = 10.dp)
-            .fillMaxWidth()) {
+        Column(
+            modifier = modifier
+                .padding(vertical = 10.dp)
+                .fillMaxWidth()
+        ) {
             Divider(
                 thickness = 1.dp,
                 color = Color(0xFFcccccc),
@@ -189,12 +197,22 @@ class LoginWithEmailAndPasswordScreen(private val navController: NavController? 
     }
 
     @Composable
-    fun Fields(modifier: Modifier = Modifier) {
+    fun Fields(
+        email: String,
+        onEmailChange: (String) -> Unit,
+        isError: Boolean,
+        modifier: Modifier = Modifier
+    ) {
         Column(
             verticalArrangement = Arrangement.spacedBy(5.dp),
             modifier = Modifier.fillMaxWidth()
         ) {
-            AuthComponents().EmailField()
+            AuthComponents().EmailField(
+                email = email,
+                onEmailChange = onEmailChange,
+                isError = isError,
+                allowCPF = true
+            )
             AuthComponents().PasswordField()
             RememberMeField()
             FieldDivider()
@@ -219,6 +237,10 @@ class LoginWithEmailAndPasswordScreen(private val navController: NavController? 
                 style = MaterialTheme.typography.labelSmall.copy(fontWeight = FontWeight.Bold),
             )
         }
+    }
+
+    private fun isEmailValid(email: String): Boolean {
+        return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
     }
 }
 
