@@ -229,9 +229,7 @@ class LoginScreen(private val navController: NavController? = null) {
                     start = offset,
                     end = offset
                 ).firstOrNull()?.let {
-                    println("Clicou em ${it.item}")
-
-                    // todo: redirecionar para página de cadastro
+                    navController?.navigate("signup")
                 }
             })
     }

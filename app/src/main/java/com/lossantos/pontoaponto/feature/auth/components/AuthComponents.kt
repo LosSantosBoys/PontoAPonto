@@ -48,30 +48,12 @@ class AuthComponents {
                 fieldLabel = "E-mail ou CPF"
             }
 
-            Text(
+            InputComponents().TextInput(
                 fieldLabel,
-                style = MaterialTheme.typography.labelSmall.copy(fontWeight = FontWeight.SemiBold)
-            )
-            TextField(
-                value = email,
-                onValueChange = { email = it },
-                label = {
-                    Text(
-                        fieldLabel,
-                        style = MaterialTheme.typography.labelSmall,
-                        color = Color(0xFF7D7D7D)
-                    )
-                },
-                colors = TextFieldDefaults.textFieldColors(
-                    containerColor = Color(0xFFFAFAFA),
-                    disabledIndicatorColor = Color.Transparent,
-                    errorIndicatorColor = Color.Transparent,
-                    focusedIndicatorColor = Color.Transparent,
-                    unfocusedIndicatorColor = Color.Transparent
-                ),
-                shape = RoundedCornerShape(8.dp),
-                singleLine = true,
-                modifier = modifier.fillMaxWidth()
+                fieldLabel,
+                email,
+                { email = it },
+                modifier
             )
         }
     }

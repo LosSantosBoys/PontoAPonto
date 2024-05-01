@@ -54,20 +54,15 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.lossantos.pontoaponto.feature.auth.components.AuthComponents
+import com.lossantos.pontoaponto.feature.auth.components.BarComponents
+import com.lossantos.pontoaponto.feature.auth.components.ButtonsComponents
+import com.lossantos.pontoaponto.feature.auth.components.InputComponents
 
 class LoginWithEmailAndPasswordScreen(private val navController: NavController? = null) {
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     fun Screen() {
-        Scaffold(topBar = {
-            TopAppBar(title = { /*TODO*/ }, navigationIcon = {
-                if (navController?.previousBackStackEntry != null) {
-                    IconButton(onClick = { navController.popBackStack() }) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Voltar")
-                    }
-                }
-            }, modifier = Modifier.padding(0.dp))
-        }) { it ->
+        Scaffold(topBar = { BarComponents().AppBar(navController) }) { it ->
             Column(
                 verticalArrangement = Arrangement.spacedBy(
                     10.dp,
@@ -115,10 +110,10 @@ class LoginWithEmailAndPasswordScreen(private val navController: NavController? 
             modifier = modifier.fillMaxWidth()
         ) {
             Row(verticalAlignment = Alignment.CenterVertically) {
-                Checkbox(checked = rememberMe, onCheckedChange = { rememberMe = it })
-                Text(
-                    text = "Lembre-se de mim",
-                    style = MaterialTheme.typography.labelSmall.copy(fontSize = 14.sp)
+                InputComponents().Checkbox(
+                    onChange = { rememberMe = it },
+                    checked = rememberMe,
+                    text = "Lembre-se de mim"
                 )
             }
             ClickableText(
@@ -131,7 +126,8 @@ class LoginWithEmailAndPasswordScreen(private val navController: NavController? 
                     ).firstOrNull()?.let {
                         navController?.navigate("forgot_password")
                     }
-                })
+                }
+            )
         }
     }
 
