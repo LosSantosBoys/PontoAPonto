@@ -42,7 +42,7 @@ class AuthComponents {
         ) {
             val fieldLabel = if (allowCPF) "E-mail ou CPF" else "E-mail"
 
-            InputComponents().TextInput(
+            Text(
                 fieldLabel,
                 style = MaterialTheme.typography.labelSmall.copy(fontWeight = FontWeight.SemiBold)
             )

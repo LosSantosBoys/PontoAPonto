@@ -38,6 +38,9 @@ class SignupScreen(private val navController: NavController? = null) {
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     fun Screen() {
+        var email by remember { mutableStateOf("") }
+        var emailError by remember { mutableStateOf(false) }
+
         Scaffold(topBar = { BarComponents().AppBar(navController) }) { it ->
             Column(
                 verticalArrangement = Arrangement.spacedBy(
@@ -59,7 +62,15 @@ class SignupScreen(private val navController: NavController? = null) {
                     verticalArrangement = Arrangement.spacedBy(5.dp),
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    AuthComponents().EmailField()
+                    AuthComponents().EmailField(
+                        email = email,
+                        onEmailChange = { newEmail ->
+                            email = newEmail
+                            emailError = !isEmailValid(newEmail)
+                        },
+                        isError = emailError,
+                        allowCPF = true
+                    )
                     AuthComponents().PasswordField()
                     ConfirmPolicyField()
                     Line()
@@ -142,6 +153,11 @@ class SignupScreen(private val navController: NavController? = null) {
                 modifier = Modifier.padding(horizontal = 24.dp)
             )
         }
+    }
+
+
+    private fun isEmailValid(email: String): Boolean {
+        return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
     }
 }
 

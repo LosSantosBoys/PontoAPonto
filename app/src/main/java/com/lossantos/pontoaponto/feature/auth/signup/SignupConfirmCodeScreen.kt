@@ -24,14 +24,11 @@ import com.lossantos.pontoaponto.feature.auth.components.AuthComponents
 import com.lossantos.pontoaponto.feature.auth.components.BarComponents
 import com.lossantos.pontoaponto.feature.auth.components.InputComponents
 
-class SignupPersonalDataScreen(private val navController: NavController? = null) {
+class SignupConfirmCodeScreen(private val navController: NavController? = null) {
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     fun Screen() {
-        var name by remember { mutableStateOf("") }
-        var phone by remember { mutableStateOf("") }
-        var cpf by remember { mutableStateOf("") }
-        var birthDate by remember { mutableStateOf("") }
+        var code by remember { mutableStateOf("") }
 
         Scaffold(topBar = { BarComponents().AppBar(navController) }) { it ->
             Column(
@@ -45,39 +42,24 @@ class SignupPersonalDataScreen(private val navController: NavController? = null)
                     .fillMaxWidth()
             )
             {
-                AuthComponents().Header(title = "Agora seus dados pessoais!")
-                Spacer(modifier = Modifier.height(10.dp))
+                AuthComponents().Header(
+                    title = "Verificação de segurança",
+                    subtitle = "Enviamos um código ao seu e-mail! Dê uma olhada e o insira embaixo para verificar."
+                )
+                Spacer(modifier = Modifier.height(20.dp))
                 Column(
                     verticalArrangement = Arrangement.spacedBy(5.dp),
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     InputComponents().TextInput(
-                        label = "Nome",
-                        placeholder = "Nome",
-                        value = name,
-                        onChange = { name = it }
-                    )
-                    InputComponents().PhoneInput(
-                        label = "Número",
-                        placeholder = "Número",
-                        value = phone,
-                        onChange = { phone = it }
-                    )
-                    InputComponents().CpfInput(
-                        label = "Cpf",
-                        placeholder = "Cpf",
-                        value = cpf,
-                        onChange = { cpf = it }
-                    )
-                    InputComponents().DateInput(
-                        label = "Data de nascimento",
-                        placeholder = "Data de nascimento",
-                        value = birthDate,
-                        onChange = { birthDate = it }
+                        label = null,
+                        placeholder = "Código",
+                        value = code,
+                        onChange = { code = it }
                     )
                 }
                 Spacer(modifier = Modifier.weight(1f))
-                ButtonsComponents().BaseButton("Continuar", { navController?.navigate("signup_confirm_code") })
+                ButtonsComponents().BaseButton("Continuar", { navController?.navigate("login_with_email_and_password") })
             }
         }
     }
@@ -85,6 +67,6 @@ class SignupPersonalDataScreen(private val navController: NavController? = null)
 
 @Preview(showBackground = true)
 @Composable
-fun SignupPersonalDataScreenPreview() {
-    SignupPersonalDataScreen().Screen()
+fun SignupConfirmCodeScreenPreview() {
+    SignupConfirmCodeScreen().Screen()
 }
