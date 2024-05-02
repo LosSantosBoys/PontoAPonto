@@ -72,7 +72,7 @@ class AuthComponents {
 
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
-    fun PasswordField(modifier: Modifier = Modifier) {
+    fun PasswordField(onPasswordChange: (String) -> Unit, modifier: Modifier = Modifier) {
         var password by remember { mutableStateOf("") }
         var passwordVisible by remember { mutableStateOf(false) }
 
@@ -88,7 +88,10 @@ class AuthComponents {
             )
             TextField(
                 value = password,
-                onValueChange = { password = it },
+                onValueChange = {
+                    password = it
+                    onPasswordChange(it)
+                },
                 label = {
                     Text(
                         "Senha",

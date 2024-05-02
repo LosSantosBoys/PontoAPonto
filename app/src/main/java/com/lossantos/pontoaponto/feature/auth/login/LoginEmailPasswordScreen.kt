@@ -1,6 +1,5 @@
 package com.lossantos.pontoaponto.feature.auth.login
 
-import android.widget.CheckBox
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -10,29 +9,15 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
-import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.Visibility
-import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldDefaults
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -43,10 +28,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
@@ -55,7 +36,6 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.lossantos.pontoaponto.feature.auth.components.AuthComponents
 import com.lossantos.pontoaponto.feature.auth.components.BarComponents
-import com.lossantos.pontoaponto.feature.auth.components.ButtonsComponents
 import com.lossantos.pontoaponto.feature.auth.components.InputComponents
 
 class LoginWithEmailAndPasswordScreen(private val navController: NavController? = null) {
@@ -64,6 +44,7 @@ class LoginWithEmailAndPasswordScreen(private val navController: NavController? 
     fun Screen() {
         var email by remember { mutableStateOf("") }
         var emailError by remember { mutableStateOf(false) }
+        var password by remember { mutableStateOf("") }
 
         Scaffold(topBar = { BarComponents().AppBar(navController) }) { it ->
             Column(
@@ -82,10 +63,16 @@ class LoginWithEmailAndPasswordScreen(private val navController: NavController? 
                     subtitle = "Por favor, insira seu e-mail e senha para entrar."
                 )
                 Spacer(modifier = Modifier.height(10.dp))
-                Fields(email, { newEmail ->
-                    email = newEmail
-                    emailError = !isEmailValid(newEmail)
-                }, isError = emailError)
+                Fields(
+                    email = email,
+                    onEmailChange = { newEmail ->
+                        email = newEmail
+                        emailError = !isEmailValid(newEmail)
+                    },
+                    isError = emailError,
+                    password = password,
+                    onPasswordChange = { newPassword -> password = newPassword }
+                )
                 Spacer(modifier = Modifier.weight(1f))
                 Login()
             }
@@ -197,6 +184,8 @@ class LoginWithEmailAndPasswordScreen(private val navController: NavController? 
         email: String,
         onEmailChange: (String) -> Unit,
         isError: Boolean,
+        password: String,
+        onPasswordChange: (String) -> Unit,
         modifier: Modifier = Modifier
     ) {
         Column(
@@ -209,12 +198,13 @@ class LoginWithEmailAndPasswordScreen(private val navController: NavController? 
                 isError = isError,
                 allowCPF = true
             )
-            AuthComponents().PasswordField()
+            AuthComponents().PasswordField(onPasswordChange = onPasswordChange)
             RememberMeField()
             FieldDivider()
             CreateAccount()
         }
     }
+
 
     @Composable
     fun Login(modifier: Modifier = Modifier) {
