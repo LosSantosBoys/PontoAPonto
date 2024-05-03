@@ -120,26 +120,4 @@ class AuthComponents {
             )
         }
     }
-
-    @Composable
-    fun Header(title: String, modifier: Modifier = Modifier, subtitle: String? = null) {
-        Column(
-            verticalArrangement = Arrangement.spacedBy(10.dp),
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Text(
-                title,
-                style = MaterialTheme.typography.labelLarge,
-                modifier = modifier
-            )
-
-            if (subtitle != null) {
-                Text(
-                    text = subtitle,
-                    style = MaterialTheme.typography.labelSmall,
-                    modifier = modifier
-                )
-            }
-        }
-    }
 }
