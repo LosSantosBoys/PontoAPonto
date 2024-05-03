@@ -66,6 +66,8 @@ dependencies {
     implementation("androidx.navigation:navigation-ui-ktx:$nav_version")
     implementation("androidx.navigation:navigation-compose:$nav_version")
     implementation("androidx.navigation:navigation-dynamic-features-fragment:$nav_version")
+    implementation("com.squareup.retrofit2:retrofit:2.11.0")
+    implementation("com.squareup.retrofit2:converter-scalars:2.11.0")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.navigation:navigation-testing:$nav_version")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
