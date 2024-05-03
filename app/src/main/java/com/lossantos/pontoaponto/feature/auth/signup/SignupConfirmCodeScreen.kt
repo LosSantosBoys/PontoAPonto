@@ -20,6 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.lossantos.pontoaponto.feature.Util
 import com.lossantos.pontoaponto.feature.auth.components.AuthComponents
 import com.lossantos.pontoaponto.feature.auth.components.BarComponents
 import com.lossantos.pontoaponto.feature.auth.components.InputComponents
@@ -42,7 +43,7 @@ class SignupConfirmCodeScreen(private val navController: NavController? = null) 
                     .fillMaxWidth()
             )
             {
-                AuthComponents().Header(
+                Util().Header(
                     title = "Verificação de segurança",
                     subtitle = "Enviamos um código ao seu e-mail! Dê uma olhada e o insira embaixo para verificar."
                 )
@@ -59,7 +60,9 @@ class SignupConfirmCodeScreen(private val navController: NavController? = null) 
                     )
                 }
                 Spacer(modifier = Modifier.weight(1f))
-                ButtonsComponents().BaseButton("Continuar", { navController?.navigate("login_with_email_and_password") })
+                ButtonsComponents().BaseButton(
+                    "Continuar",
+                    { navController?.navigate("login_with_email_and_password") })
             }
         }
     }

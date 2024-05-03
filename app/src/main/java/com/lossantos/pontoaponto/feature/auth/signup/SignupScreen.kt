@@ -30,6 +30,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.lossantos.pontoaponto.feature.Util
 import com.lossantos.pontoaponto.feature.auth.components.AuthComponents
 import com.lossantos.pontoaponto.feature.auth.components.BarComponents
 import com.lossantos.pontoaponto.feature.auth.components.InputComponents
@@ -53,7 +54,7 @@ class SignupScreen(private val navController: NavController? = null) {
                     .fillMaxWidth()
             )
             {
-                AuthComponents().Header(
+                Util().Header(
                     title = "Crie uma conta",
                     subtitle = "O PontoAPonto é um dos melhores aplicativos de transporte atualmente!"
                 )
@@ -77,7 +78,9 @@ class SignupScreen(private val navController: NavController? = null) {
                     Link()
                 }
                 Spacer(modifier = Modifier.weight(1f))
-                ButtonsComponents().BaseButton("Criar conta", { navController?.navigate("signup_personal_data") })
+                ButtonsComponents().BaseButton(
+                    "Criar conta",
+                    { navController?.navigate("signup_personal_data") })
             }
         }
     }
@@ -113,7 +116,10 @@ class SignupScreen(private val navController: NavController? = null) {
                     append("Já tem uma conta? ")
                 }
 
-                pushStringAnnotation(tag = "Clickable", annotation = "Já tem uma conta? Faça login.")
+                pushStringAnnotation(
+                    tag = "Clickable",
+                    annotation = "Já tem uma conta? Faça login."
+                )
                 withStyle(
                     style = MaterialTheme.typography.labelSmall.copy(
                         fontWeight = FontWeight.Bold,
@@ -144,9 +150,11 @@ class SignupScreen(private val navController: NavController? = null) {
 
     @Composable
     fun Line() {
-        Column(modifier = Modifier
-            .padding(vertical = 10.dp)
-            .fillMaxWidth()) {
+        Column(
+            modifier = Modifier
+                .padding(vertical = 10.dp)
+                .fillMaxWidth()
+        ) {
             Divider(
                 thickness = 1.dp,
                 color = Color(0xFFcccccc),

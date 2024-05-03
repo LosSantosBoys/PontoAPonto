@@ -33,6 +33,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.lossantos.pontoaponto.feature.Util
 import com.lossantos.pontoaponto.feature.auth.components.AuthComponents
 
 class ForgotPasswordScreen(private val navController: NavController? = null) {
@@ -61,7 +62,7 @@ class ForgotPasswordScreen(private val navController: NavController? = null) {
                     .padding(horizontal = 24.dp, vertical = 30.dp)
                     .fillMaxWidth()
             ) {
-                AuthComponents().Header(
+                Util().Header(
                     title = "Esqueceu a senha?",
                     subtitle = "Por favor, insira seu e-mail ou seu CPF."
                 )
