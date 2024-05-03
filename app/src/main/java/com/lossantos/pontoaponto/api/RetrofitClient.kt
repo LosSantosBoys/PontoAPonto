@@ -1,18 +1,23 @@
 package com.lossantos.pontoaponto.api
 
 import retrofit2.Retrofit
-import retrofit2.converter.moshi.MoshiConverterFactory
+import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitClient {
+    private var retrofit: Retrofit? = null
+    private const val BASE_URL =
+        "http://localhost:5000" //Need to use your ipv4 or proxy :5000
 
-    private const val BASE_URL = "https://localhost:5001/"
+    fun createRetrofit() : Retrofit? {
+        Retrofit.Builder()
+        if (retrofit == null) {
+            retrofit =
+                Retrofit.Builder()
+                    .baseUrl(BASE_URL)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+        }
 
-    fun createPontoAPonto(): PontoAPontoService {
-        val retrofit = Retrofit.Builder()
-            .addConverterFactory(MoshiConverterFactory.create())
-            .baseUrl(BASE_URL)
-            .build()
-
-        return retrofit.create(PontoAPontoService::class.java)
+        return retrofit;
     }
 }
