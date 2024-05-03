@@ -24,9 +24,9 @@ import com.lossantos.pontoaponto.feature.auth.components.AuthComponents
 import com.lossantos.pontoaponto.feature.auth.components.BarComponents
 import com.lossantos.pontoaponto.feature.auth.components.ButtonsComponents
 import com.lossantos.pontoaponto.feature.auth.components.InputComponents
+import com.lossantos.pontoaponto.feature.auth.viewmodels.SignUpPersonalViewModel
 import com.lossantos.pontoaponto.models.SignUpViewModel
 import com.lossantos.pontoaponto.models.request.SignUpRequest
-import com.lossantos.pontoaponto.service.UserService
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -40,8 +40,6 @@ class SignupPersonalDataScreen(private val navController: NavController, private
         var phone by remember { mutableStateOf("") }
         var cpf by remember { mutableStateOf("") }
         var birthDate by remember { mutableStateOf("") }
-
-        val userService = UserService();
 
         Scaffold(topBar = { BarComponents().AppBar(navController) }) { it ->
             Column(
@@ -86,6 +84,7 @@ class SignupPersonalDataScreen(private val navController: NavController, private
                         onChange = { birthDate = it }
                     )
                 }
+
                 val signUpRequest = SignUpRequest(
                     name = name,
                     email = viewModel.email,
@@ -95,27 +94,19 @@ class SignupPersonalDataScreen(private val navController: NavController, private
                     birthday = birthDate
                 )
 
+                val signUpPersonalViewModel = SignUpPersonalViewModel()
                 Spacer(modifier = Modifier.weight(1f))
                 ButtonsComponents().BaseButton(
                     "Continuar",
                     onClick = {
-                        CoroutineScope(Dispatchers.IO).launch{
                             Log.d(viewModel.email, viewModel.password)
-                            createUser(navController, signUpRequest)
+                        CoroutineScope(Dispatchers.IO).launch {
+                            signUpPersonalViewModel.postSignUp(signUpRequest)
                         }
                     }
                 )
             }
         }
-    }
-}
-
-private suspend fun createUser(navController: NavController? = null, signUpRequest: SignUpRequest) {
-    val userService = UserService()
-    val response = userService.createUser(signUpRequest)
-    if (response != null && response.success) {
-        navController?.navigate("signup_confirm_code")
-    } else {
     }
 }
 
