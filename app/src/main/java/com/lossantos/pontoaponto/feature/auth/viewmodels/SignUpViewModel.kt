@@ -1,6 +1,5 @@
 package com.lossantos.pontoaponto.feature.auth.viewmodels
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.lossantos.pontoaponto.api.PontoAPontoService
 import com.lossantos.pontoaponto.api.RetrofitClient
@@ -20,7 +19,6 @@ class SignUpPersonalViewModel : ViewModel() {
 
                 val response = service?.postSignUp(signUpRequest)
 
-                Log.d("teste", response.toString())
                 response?.body()
             } catch (e: Exception) {
                 e.printStackTrace()

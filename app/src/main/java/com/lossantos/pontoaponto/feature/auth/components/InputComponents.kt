@@ -14,13 +14,8 @@ import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.AnnotatedString
-import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.OffsetMapping
-import androidx.compose.ui.text.input.TransformedText
-import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.lossantos.pontoaponto.utils.masker.MaskerTransformation
@@ -49,7 +44,8 @@ class InputComponents {
         placeholder: String,
         value: String,
         onChange: (value: String) -> Unit,
-        modifier: Modifier = Modifier
+        modifier: Modifier = Modifier,
+        isError: Boolean = false
     ) {
         Column(
             verticalArrangement = Arrangement.spacedBy(10.dp),
@@ -83,7 +79,8 @@ class InputComponents {
                 ),
                 shape = RoundedCornerShape(8.dp),
                 singleLine = true,
-                modifier = modifier.fillMaxWidth()
+                modifier = modifier.fillMaxWidth(),
+                isError = isError,
             )
         }
     }
@@ -97,7 +94,8 @@ class InputComponents {
         onChange: (value: String) -> Unit,
         mask: String,
         characterLimit: Int,
-        modifier: Modifier = Modifier
+        modifier: Modifier = Modifier,
+        isError: Boolean = false
     ) {
         Column(
             verticalArrangement = Arrangement.spacedBy(10.dp),
@@ -109,6 +107,24 @@ class InputComponents {
                 Text(
                     label,
                     style = MaterialTheme.typography.labelSmall.copy(fontWeight = FontWeight.SemiBold)
+                )
+            }
+
+            val textFieldColors = if (isError) {
+                TextFieldDefaults.textFieldColors(
+                    containerColor = Color(0xFFFAFAFA),
+                    disabledIndicatorColor = Color.Transparent,
+                    errorIndicatorColor = Color.Red,
+                    focusedIndicatorColor = Color.Transparent,
+                    unfocusedIndicatorColor = Color.Transparent
+                )
+            } else {
+                TextFieldDefaults.textFieldColors(
+                    containerColor = Color(0xFFFAFAFA),
+                    disabledIndicatorColor = Color.Transparent,
+                    errorIndicatorColor = Color.Transparent,
+                    focusedIndicatorColor = Color.Transparent,
+                    unfocusedIndicatorColor = Color.Transparent
                 )
             }
 
@@ -126,18 +142,13 @@ class InputComponents {
                         color = Color(0xFF7D7D7D)
                     )
                 },
-                colors = TextFieldDefaults.textFieldColors(
-                    containerColor = Color(0xFFFAFAFA),
-                    disabledIndicatorColor = Color.Transparent,
-                    errorIndicatorColor = Color.Transparent,
-                    focusedIndicatorColor = Color.Transparent,
-                    unfocusedIndicatorColor = Color.Transparent
-                ),
+                colors = textFieldColors,
                 shape = RoundedCornerShape(8.dp),
                 singleLine = true,
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
                 visualTransformation = MaskerTransformation(mask, characterLimit),
-                modifier = modifier.fillMaxWidth()
+                modifier = modifier.fillMaxWidth(),
+                isError = isError
             )
         }
     }
@@ -149,7 +160,8 @@ class InputComponents {
         placeholder: String,
         value: String,
         onChange: (value: String) -> Unit,
-        modifier: Modifier = Modifier
+        modifier: Modifier = Modifier,
+        isError: Boolean = false
     ) {
         MaskInput(
             label = label,
@@ -159,6 +171,7 @@ class InputComponents {
             "(##)#####-####",
             11,
             modifier = modifier,
+            isError = isError
         )
     }
 
@@ -169,7 +182,8 @@ class InputComponents {
         placeholder: String,
         value: String,
         onChange: (value: String) -> Unit,
-        modifier: Modifier = Modifier
+        modifier: Modifier = Modifier,
+        isError: Boolean = false
     ) {
         MaskInput(
             label = label,
@@ -179,6 +193,7 @@ class InputComponents {
             "###.###.###-##",
             11,
             modifier = modifier,
+            isError = isError
         )
     }
 
@@ -189,7 +204,8 @@ class InputComponents {
         placeholder: String,
         value: String,
         onChange: (value: String) -> Unit,
-        modifier: Modifier = Modifier
+        modifier: Modifier = Modifier,
+        isError: Boolean = false
     ) {
         MaskInput(
             label = label,
@@ -199,6 +215,7 @@ class InputComponents {
             "##/##/####",
             8,
             modifier = modifier,
+            isError = isError
         )
     }
 }

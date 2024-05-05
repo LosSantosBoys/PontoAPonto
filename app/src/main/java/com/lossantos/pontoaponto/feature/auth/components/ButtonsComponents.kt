@@ -1,6 +1,5 @@
-package com.lossantos.pontoaponto.feature.auth.components;
+package com.lossantos.pontoaponto.feature.auth.components
 
-import android.widget.Button;
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
@@ -13,18 +12,17 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-
-import androidx.compose.runtime.Composable;
-import androidx.compose.ui.Modifier;
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 
-public class ButtonsComponents {
+class ButtonsComponents {
     @Composable
-    fun BaseButton(text: String, onClick: () -> Unit, modifier: Modifier = Modifier) {
+    fun BaseButton(text: String, onClick: () -> Unit, modifier: Modifier = Modifier, enabled: Boolean = true) {
         Button(
             onClick = onClick,
             contentPadding = PaddingValues(10.dp),
@@ -32,7 +30,8 @@ public class ButtonsComponents {
             shape = RoundedCornerShape(12.dp),
             modifier = modifier
                     .heightIn(min = 44.dp)
-                    .fillMaxWidth()
+                    .fillMaxWidth(),
+            enabled = enabled
         ) {
             Text(
                 text = text,
