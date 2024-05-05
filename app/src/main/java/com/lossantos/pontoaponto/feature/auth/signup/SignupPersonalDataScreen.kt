@@ -1,6 +1,5 @@
 package com.lossantos.pontoaponto.feature.auth.signup
 
-import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -30,6 +29,7 @@ import com.lossantos.pontoaponto.models.request.SignUpRequest
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 
 class SignupPersonalDataScreen(private val navController: NavController, private val viewModel: SignUpViewModel) {
@@ -42,6 +42,8 @@ class SignupPersonalDataScreen(private val navController: NavController, private
         var birthDate by remember { mutableStateOf("") }
 
         Scaffold(topBar = { BarComponents().AppBar(navController) }) { it ->
+            val context = LocalContext.current
+
             Column(
                 verticalArrangement = Arrangement.spacedBy(
                     10.dp,
@@ -99,15 +101,30 @@ class SignupPersonalDataScreen(private val navController: NavController, private
                 ButtonsComponents().BaseButton(
                     "Continuar",
                     onClick = {
-                            Log.d(viewModel.email, viewModel.password)
                         CoroutineScope(Dispatchers.IO).launch {
-                            signUpPersonalViewModel.postSignUp(signUpRequest)
+                            //LoadingService.showLoading(context)
+                            val success = createUser(signUpRequest)
+                            //LoadingService.hideLoading()
+
+                            withContext(Dispatchers.Main) {
+                                if (success) {
+                                    navController.navigate("signup_confirm_code")
+                                } else {
+                                    //Snackbar
+                                }
+                            }
                         }
                     }
                 )
             }
         }
     }
+}
+
+suspend fun createUser(request: SignUpRequest) : Boolean {
+    val signUpPersonalViewModel = SignUpPersonalViewModel()
+    val response = signUpPersonalViewModel.postSignUp(request)
+    return response?.success ?: false
 }
 
 @Preview(showBackground = true)
