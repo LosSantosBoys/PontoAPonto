@@ -40,11 +40,9 @@ class MainActivity : ComponentActivity() {
 
         NavHost(navController = navController, startDestination = "login") {
             composable("login") {
-                val viewModel = it.sharedViewModel<SignUpViewModel>(navController = (navController))
                 LoginScreen(navController = navController).Screen()
             }
             composable("login_with_email_and_password") {
-                val viewModel = it.sharedViewModel<SignUpViewModel>(navController = (navController))
                 LoginWithEmailAndPasswordScreen(navController = navController).Screen()
             }
             navigation(
@@ -58,11 +56,9 @@ class MainActivity : ComponentActivity() {
                     SignupPersonalDataScreen(navController = navController, viewModel = signUpViewModel).Screen()
                 }
                 composable("signup_confirm_code") {
-                    val viewModel = it.sharedViewModel<SignUpViewModel>(navController = (navController))
-                    SignupConfirmCodeScreen(navController = navController).Screen()
+                    SignupConfirmCodeScreen(navController = navController, viewModel = signUpViewModel).Screen()
                 }
                 composable("forgot_password") {
-                    val viewModel = it.sharedViewModel<SignUpViewModel>(navController = (navController))
                     ForgotPasswordScreen(navController = navController).Screen()
                 }
             }
