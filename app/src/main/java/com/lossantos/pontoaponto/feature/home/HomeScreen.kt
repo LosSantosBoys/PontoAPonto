@@ -4,7 +4,11 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -18,6 +22,8 @@ import androidx.compose.material.icons.filled.DirectionsTransit
 import androidx.compose.material.icons.filled.Discount
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.WbSunny
+import androidx.compose.material3.BottomAppBar
+import androidx.compose.material3.BottomSheetScaffold
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -40,7 +46,9 @@ class HomeScreen(private val navController: NavController? = null) {
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     fun Screen() {
-        Scaffold { it ->
+        Scaffold(  bottomBar = {
+            HomeComponents().BottomNavigation();
+        }) { it ->
             Column(
                 verticalArrangement = Arrangement.spacedBy(
                     10.dp,
@@ -55,7 +63,9 @@ class HomeScreen(private val navController: NavController? = null) {
                 MainServicesSection()
                 WeatherSection()
                 FollowSection()
+
             }
+
         }
     }
 
@@ -155,8 +165,12 @@ class HomeScreen(private val navController: NavController? = null) {
 
     @Composable
     fun FollowSection(modifier: Modifier = Modifier) {
+
         HomeComponents().Section(title = "Acompanhe", content = {
-            Text(text = "Mapa")
+            HomeComponents().MountainMap(
+                Modifier
+                    .fillMaxHeight()
+                    .fillMaxWidth())
         }, titleOption = {
             IconButton(onClick = { /*TODO*/ }) {
                 Icon(
