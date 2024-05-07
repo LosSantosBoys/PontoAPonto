@@ -1,9 +1,11 @@
 package com.lossantos.pontoaponto.api
 
 import com.lossantos.pontoaponto.models.request.GenerateNewOtpRequest
+import com.lossantos.pontoaponto.models.request.SignInRequest
 import com.lossantos.pontoaponto.models.request.SignUpRequest
 import com.lossantos.pontoaponto.models.request.ValidateOtpRequest
 import com.lossantos.pontoaponto.models.response.BaseResponse
+import com.lossantos.pontoaponto.models.response.SignInResponse
 import com.lossantos.pontoaponto.models.response.SignUpResponse
 import retrofit2.Response
 import retrofit2.http.Body
@@ -23,4 +25,8 @@ interface PontoAPontoService {
     @Headers("Content-Type: application/json", "Cache-Control: no-cache")
     @PATCH("/api/v1/user/signup/otp/new")
     suspend fun generateNewOtp(@Body body: GenerateNewOtpRequest) : Response<Boolean>
+
+    @Headers("Content-Type: application/json", "Cache-Control: no-cache")
+    @POST("/api/v1/user/signin")
+    suspend fun signIn(@Body body: SignInRequest) : Response<BaseResponse<SignInResponse>>
 }

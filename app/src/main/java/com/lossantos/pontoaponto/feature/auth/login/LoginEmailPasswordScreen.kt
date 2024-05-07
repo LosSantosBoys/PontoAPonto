@@ -37,6 +37,12 @@ import androidx.navigation.NavController
 import com.lossantos.pontoaponto.feature.auth.components.AuthComponents
 import com.lossantos.pontoaponto.feature.auth.components.BarComponents
 import com.lossantos.pontoaponto.feature.auth.components.InputComponents
+import com.lossantos.pontoaponto.feature.auth.viewmodels.LoginEmailPasswordViewModel
+import com.lossantos.pontoaponto.models.request.SignInRequest
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class LoginWithEmailAndPasswordScreen(private val navController: NavController? = null) {
     @OptIn(ExperimentalMaterial3Api::class)
@@ -74,7 +80,13 @@ class LoginWithEmailAndPasswordScreen(private val navController: NavController? 
                     onPasswordChange = { newPassword -> password = newPassword }
                 )
                 Spacer(modifier = Modifier.weight(1f))
-                Login()
+
+                val signInRequest = SignInRequest(
+                    email = email,
+                    password = password
+                )
+
+                Login(request = signInRequest)
             }
         }
     }
@@ -173,7 +185,7 @@ class LoginWithEmailAndPasswordScreen(private val navController: NavController? 
                     ).firstOrNull()?.let {
                         println("Clicou em ${it.item}")
 
-                        // todo: redirecionar para página de cadastro
+
                     }
                 })
         }
@@ -198,6 +210,7 @@ class LoginWithEmailAndPasswordScreen(private val navController: NavController? 
                 isError = isError,
                 allowCPF = true
             )
+
             AuthComponents().PasswordField(onPasswordChange = onPasswordChange)
             RememberMeField()
             FieldDivider()
@@ -207,9 +220,21 @@ class LoginWithEmailAndPasswordScreen(private val navController: NavController? 
 
 
     @Composable
-    fun Login(modifier: Modifier = Modifier) {
+    fun Login(modifier: Modifier = Modifier, request: SignInRequest) {
         Button(
-            onClick = { navController?.navigate("login_with_email_and_password") },
+            onClick = {
+                CoroutineScope(Dispatchers.IO).launch {
+                    val success = signIn(request)
+
+                    withContext(Dispatchers.Main) {
+                        if (success) {
+                            navController?.navigate("signup_confirm_code") //todo - homepage
+                        } else {
+                            //Snackbar
+                        }
+                    }
+                }
+            },
             contentPadding = PaddingValues(10.dp),
             colors = ButtonDefaults.buttonColors(containerColor = Color(color = 0xFF3755C1)),
             shape = RoundedCornerShape(12.dp),
@@ -228,6 +253,12 @@ class LoginWithEmailAndPasswordScreen(private val navController: NavController? 
     private fun isEmailValid(email: String): Boolean {
         return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
     }
+}
+
+suspend fun signIn(request: SignInRequest) : Boolean {
+    val signInViewModel = LoginEmailPasswordViewModel()
+    val response = signInViewModel.signIn(request)
+    return response?.success?: false
 }
 
 @Preview(showBackground = true)
