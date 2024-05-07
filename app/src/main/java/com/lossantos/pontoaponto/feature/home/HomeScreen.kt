@@ -168,11 +168,11 @@ class HomeScreen(private val navController: NavController? = null) {
 
         HomeComponents().Section(title = "Acompanhe", content = {
             HomeComponents().MountainMap(
-                Modifier
+                modifier = Modifier
                     .fillMaxHeight()
-                    .fillMaxWidth())
+                    .fillMaxWidth(), onClick = { navController?.navigate("map_screen")})
         }, titleOption = {
-            IconButton(onClick = { /*TODO*/ }) {
+            IconButton(onClick = { navController?.navigate("map_screen")}) {
                 Icon(
                     Icons.Filled.MoreVert,
                     "Botão de gerenciar Acompanhe",

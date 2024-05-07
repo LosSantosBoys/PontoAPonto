@@ -22,6 +22,7 @@ import com.lossantos.pontoaponto.feature.auth.signup.SignupConfirmCodeScreen
 import com.lossantos.pontoaponto.feature.auth.signup.SignupPersonalDataScreen
 import com.lossantos.pontoaponto.feature.auth.signup.SignupScreen
 import com.lossantos.pontoaponto.feature.home.HomeScreen
+import com.lossantos.pontoaponto.feature.home.MapScreen
 import com.lossantos.pontoaponto.feature.home.components.HomeComponents
 import com.lossantos.pontoaponto.ui.theme.PontoAPontoTheme
 
@@ -44,6 +45,7 @@ class MainActivity : ComponentActivity() {
         val navController = rememberNavController()
         NavHost(navController = navController, startDestination = "home") {
             composable("login") { LoginScreen(navController = navController).Screen() }
+            composable("map_screen") { MapScreen(navController = navController).Screen() }
             composable("login_with_email_and_password") {
                 LoginWithEmailAndPasswordScreen(navController = navController).Screen()
             }

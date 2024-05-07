@@ -78,7 +78,8 @@ class HomeComponents(private val navController: NavController? = null) {
     }
     @Composable
     fun MountainMap(
-       modifier: Modifier = Modifier
+       modifier: Modifier = Modifier,
+       onClick: () -> Unit
     ) {
         var isMapLoaded by remember { mutableStateOf(false) }
 
@@ -89,6 +90,7 @@ class HomeComponents(private val navController: NavController? = null) {
             GoogleMap(
                 modifier = Modifier.matchParentSize(),
                 onMapLoaded = { isMapLoaded = true },
+                onMapClick = { onClick },
                 onMyLocationButtonClick = { true },
             )
 
