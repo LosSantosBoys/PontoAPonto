@@ -21,6 +21,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.lossantos.pontoaponto.feature.Util
 import com.lossantos.pontoaponto.feature.auth.components.AuthComponents
 import com.lossantos.pontoaponto.feature.auth.components.BarComponents
 import com.lossantos.pontoaponto.feature.auth.components.ButtonsComponents
@@ -65,7 +66,7 @@ class SignupPersonalDataScreen(private val navController: NavController, private
                     .fillMaxWidth()
             )
             {
-                AuthComponents().Header(title = "Agora seus dados pessoais!")
+                Util().Header(title = "Agora seus dados pessoais!")
                 Spacer(modifier = Modifier.height(10.dp))
                 Column(
                     verticalArrangement = Arrangement.spacedBy(5.dp),

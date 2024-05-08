@@ -34,6 +34,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.lossantos.pontoaponto.feature.Util
 import com.lossantos.pontoaponto.feature.auth.components.AuthComponents
 import com.lossantos.pontoaponto.feature.auth.components.BarComponents
 import com.lossantos.pontoaponto.feature.auth.components.InputComponents
@@ -64,7 +65,7 @@ class LoginWithEmailAndPasswordScreen(private val navController: NavController? 
                     .fillMaxWidth()
             )
             {
-                AuthComponents().Header(
+                Util().Header(
                     title = "Bem-vindo novamente!",
                     subtitle = "Por favor, insira seu e-mail e senha para entrar."
                 )

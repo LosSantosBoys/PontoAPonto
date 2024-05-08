@@ -1,8 +1,14 @@
 package com.lossantos.pontoaponto
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.lifecycle.ViewModel
@@ -20,15 +26,21 @@ import com.lossantos.pontoaponto.feature.auth.signup.SignupConfirmCodeScreen
 import com.lossantos.pontoaponto.feature.auth.signup.SignupPersonalDataScreen
 import com.lossantos.pontoaponto.feature.auth.signup.SignupScreen
 import com.lossantos.pontoaponto.models.SignUpViewModel
+import com.lossantos.pontoaponto.feature.home.HomeScreen
+import com.lossantos.pontoaponto.feature.home.MapScreen
+import com.lossantos.pontoaponto.feature.home.components.HomeComponents
 import com.lossantos.pontoaponto.ui.theme.PontoAPontoTheme
 
 class MainActivity : ComponentActivity() {
+    @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             PontoAPontoTheme {
                 // A surface container using the 'background' color from the theme
                 MyApp()
+
+
             }
         }
     }
@@ -61,8 +73,13 @@ class MainActivity : ComponentActivity() {
                 composable("forgot_password") {
                     ForgotPasswordScreen(navController = navController).Screen()
                 }
+                composable("home") { 
+                    HomeScreen(navController = navController).Screen() 
+                }
+                composable("map_screen") { 
+                    MapScreen(navController = navController).Screen() 
+                }
             }
-        }
     }
 }
 

@@ -24,6 +24,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.lossantos.pontoaponto.feature.Util
 import com.lossantos.pontoaponto.feature.auth.components.AuthComponents
 import com.lossantos.pontoaponto.feature.auth.components.BarComponents
 import com.lossantos.pontoaponto.feature.auth.components.ButtonsComponents
@@ -56,7 +57,7 @@ class SignupConfirmCodeScreen(private val navController: NavController,  private
                     .fillMaxWidth()
             )
             {
-                AuthComponents().Header(
+                Util().Header(
                     title = "Verificação de segurança",
                     subtitle = "Enviamos um código ao seu e-mail! Dê uma olhada e insira-o abaixo para verificação."
                 )

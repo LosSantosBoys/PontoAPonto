@@ -231,7 +231,8 @@ class LoginScreen(private val navController: NavController? = null) {
                 ).firstOrNull()?.let {
                     navController?.navigate("signup")
                 }
-            })
+            },
+        )
     }
 
     @Composable
