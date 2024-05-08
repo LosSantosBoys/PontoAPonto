@@ -60,35 +60,45 @@ class MainActivity : ComponentActivity() {
             navigation(
                 startDestination = "signup",
                 route = "auth"
-            ){
+            ) {
                 composable("signup") {
-                    SignupScreen(navController = navController, viewModel = signUpViewModel).Screen()
+                    SignupScreen(
+                        navController = navController,
+                        viewModel = signUpViewModel
+                    ).Screen()
                 }
                 composable("signup_personal_data") {
-                    SignupPersonalDataScreen(navController = navController, viewModel = signUpViewModel).Screen()
+                    SignupPersonalDataScreen(
+                        navController = navController,
+                        viewModel = signUpViewModel
+                    ).Screen()
                 }
                 composable("signup_confirm_code") {
-                    SignupConfirmCodeScreen(navController = navController, viewModel = signUpViewModel).Screen()
+                    SignupConfirmCodeScreen(
+                        navController = navController,
+                        viewModel = signUpViewModel
+                    ).Screen()
                 }
                 composable("forgot_password") {
                     ForgotPasswordScreen(navController = navController).Screen()
                 }
-                composable("home") { 
-                    HomeScreen(navController = navController).Screen() 
+                composable("home") {
+                    HomeScreen(navController = navController).Screen()
                 }
-                composable("map_screen") { 
-                    MapScreen(navController = navController).Screen() 
+                composable("map_screen") {
+                    MapScreen(navController = navController).Screen()
                 }
             }
-    }
-}
-
-@Composable
-inline fun <reified T : ViewModel> NavBackStackEntry.sharedViewModel(navController: NavController): T {
-    val navGraphRoute = destination.parent?.route ?: return viewModel()
-    val parentEntry = remember(this){
-        navController.getBackStackEntry(navGraphRoute)
+        }
     }
 
-    return viewModel(parentEntry)
+    @Composable
+    inline fun <reified T : ViewModel> NavBackStackEntry.sharedViewModel(navController: NavController): T {
+        val navGraphRoute = destination.parent?.route ?: return viewModel()
+        val parentEntry = remember(this) {
+            navController.getBackStackEntry(navGraphRoute)
+        }
+
+        return viewModel(parentEntry)
+    }
 }

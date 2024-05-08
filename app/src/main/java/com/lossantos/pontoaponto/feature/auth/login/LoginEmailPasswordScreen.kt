@@ -229,9 +229,9 @@ class LoginWithEmailAndPasswordScreen(private val navController: NavController? 
 
                     withContext(Dispatchers.Main) {
                         if (success) {
-                            navController?.navigate("signup_confirm_code") //todo - homepage
+                            navController?.navigate("home")
                         } else {
-                            //Snackbar
+                            navController?.navigate("home")//Snackbar //todo - failed
                         }
                     }
                 }
