@@ -9,16 +9,6 @@ class AuthService {
   final HttpRepository dio = DioRepository();
   final String _server = dotenv.env['SERVER']!;
 
-  Future<bool> accountExists({required String email}) async {
-    try {
-      // TODO: Implementar a lógica de verificar se a conta existe.
-
-      return true;
-    } catch (e) {
-      return false;
-    }
-  }
-
   Future<ServiceReturn> createAccount({
     required String name,
     required String email,
@@ -28,13 +18,6 @@ class AuthService {
     required DateTime birthday,
   }) async {
     try {
-      if (await accountExists(email: email)) {
-        return const ServiceReturn(
-          status: ServiceStatusEnum.error,
-          message: "Conta já existe.",
-        );
-      }
-
       HttpReturn response = await dio.post(
         '$_server/api/v1/user/signup',
         {
