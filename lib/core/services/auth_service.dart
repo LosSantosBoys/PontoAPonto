@@ -1,5 +1,7 @@
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:pontoaponto/core/enum/service_status_enum.dart';
+import 'package:pontoaponto/core/models/http_options.dart';
 import 'package:pontoaponto/core/models/http_return.dart';
 import 'package:pontoaponto/core/models/service_return.dart';
 import 'package:pontoaponto/core/repositories/dio_repository.dart';
@@ -7,6 +9,8 @@ import 'package:pontoaponto/core/repositories/http_repository.dart';
 
 class AuthService {
   final HttpRepository dio = DioRepository();
+  AndroidOptions _getAndroidOptions() => const AndroidOptions(encryptedSharedPreferences: true);
+  final FlutterSecureStorage storage = const FlutterSecureStorage();
   final String _server = dotenv.env['SERVER']!;
 
   Future<ServiceReturn> createAccount({
@@ -62,6 +66,12 @@ class AuthService {
         );
       }
 
+      await storage.write(
+        key: "token",
+        value: response.data['token'],
+        aOptions: _getAndroidOptions(),
+      );
+
       return const ServiceReturn(
         status: ServiceStatusEnum.success,
       );
@@ -79,6 +89,7 @@ class AuthService {
 
       // Simula uma requisição de logout.
       await Future.delayed(const Duration(seconds: 2));
+      await storage.delete(key: "token");
 
       // Simula logout.
       return const ServiceReturn(
@@ -98,6 +109,7 @@ class AuthService {
 
       // Simula uma requisição de deletar conta.
       await Future.delayed(const Duration(seconds: 2));
+      await storage.delete(key: "token");
 
       // Simula deletar conta.
       return const ServiceReturn(
@@ -176,6 +188,29 @@ class AuthService {
         status: ServiceStatusEnum.error,
         message: "Erro ao verificar o código de verificação.",
       );
+    }
+  }
+
+  Future<bool> isAuthenticated() async {
+    try {
+      final String? token = await storage.read(key: "token");
+
+      if (token == null) {
+        return false;
+      }
+
+      HttpReturn response = await dio.get(
+        '$_server/api/v1/user/me',
+        options: HttpOptions(headers: {"token": token}),
+      );
+
+      if (response.statusCode != 200) {
+        return false;
+      }
+
+      return true;
+    } catch (e) {
+      return false;
     }
   }
 }
