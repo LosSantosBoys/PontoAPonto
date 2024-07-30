@@ -105,7 +105,14 @@ class AuthService {
 
   Future<ServiceReturn> deleteAccount() async {
     try {
-      // TODO: Implementar a lógica de deletar conta.
+      HttpReturn response = await dio.delete('$_server/api/v1/user/me/delete');
+
+      if (response.statusCode != 200) {
+        return ServiceReturn(
+          status: ServiceStatusEnum.error,
+          message: response.data['message'],
+        );
+      }
 
       // Simula uma requisição de deletar conta.
       await Future.delayed(const Duration(seconds: 2));
