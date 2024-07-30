@@ -1,6 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:pontoaponto/features/home/enum/history_status_enum.dart';
+import 'package:pontoaponto/features/home/enum/history_type_enum.dart';
+import 'package:pontoaponto/features/home/widgets/history_tile.dart';
 import 'package:pontoaponto/features/home/widgets/section.dart';
 
 class HistoryPage extends StatefulWidget {
@@ -44,12 +45,12 @@ class _HistoryPageState extends State<HistoryPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(24),
+        padding: const EdgeInsets.symmetric(vertical: 24),
         child: Column(
           children: [
             Section(
               title: "Última viagem",
-              padding: const EdgeInsets.symmetric(vertical: 10),
+              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 24),
               action: IconButton(
                 onPressed: () {},
                 icon: const Icon(Icons.more_vert),
@@ -101,9 +102,15 @@ class _HistoryPageState extends State<HistoryPage> {
                         ),
                         child: const Row(
                           children: [
-                            Text("Remarcar"),
+                            Text(
+                              "Remarcar",
+                              style: TextStyle(color: Color(0xFF1F2024)),
+                            ),
                             SizedBox(width: 5),
-                            Icon(Icons.replay),
+                            Icon(
+                              Icons.replay,
+                              color: Color(0xFF1F2024),
+                            ),
                           ],
                         ),
                       ),
@@ -120,6 +127,7 @@ class _HistoryPageState extends State<HistoryPage> {
               child: ListView(
                 shrinkWrap: true,
                 scrollDirection: Axis.horizontal,
+                padding: const EdgeInsets.symmetric(horizontal: 24),
                 children: [
                   RawChip(
                     label: Text(
@@ -181,23 +189,73 @@ class _HistoryPageState extends State<HistoryPage> {
                 children: [
                   // Hoje
                   ListView(
+                    padding: EdgeInsets.zero,
                     shrinkWrap: true,
-                    children: [Text("Hoje")],
+                    children: [
+                      HistoryTile(
+                        address: "R. Chabad, 124",
+                        price: 16.04,
+                        status: HistoryStatus.done,
+                        date: DateTime.now(),
+                        type: HistoryType.trip,
+                      ),
+                      HistoryTile(
+                        address: "R. Chabad, 124",
+                        price: 16.04,
+                        status: HistoryStatus.planned,
+                        date: DateTime.now(),
+                        type: HistoryType.trip,
+                      ),
+                      HistoryTile(
+                        address: "R. Chabad, 124",
+                        price: 16.04,
+                        status: HistoryStatus.cancelled,
+                        date: DateTime.now(),
+                        type: HistoryType.trip,
+                      ),
+                    ],
                   ),
                   // Ontem
                   ListView(
+                    padding: EdgeInsets.zero,
                     shrinkWrap: true,
-                    children: [Text("Ontem")],
+                    children: [
+                      HistoryTile(
+                        address: "R. Chabad, 124",
+                        price: 16.04,
+                        status: HistoryStatus.done,
+                        date: DateTime.now(),
+                        type: HistoryType.trip,
+                      ),
+                    ],
                   ),
                   // Semana
                   ListView(
+                    padding: EdgeInsets.zero,
                     shrinkWrap: true,
-                    children: [Text("Semana")],
+                    children: [
+                      HistoryTile(
+                        address: "R. Chabad, 124",
+                        price: 16.04,
+                        status: HistoryStatus.cancelled,
+                        date: DateTime.now(),
+                        type: HistoryType.trip,
+                      ),
+                    ],
                   ),
                   // Mês
                   ListView(
+                    padding: EdgeInsets.zero,
                     shrinkWrap: true,
-                    children: [Text("Mês")],
+                    children: [
+                      HistoryTile(
+                        address: "R. Chabad, 124",
+                        price: 16.04,
+                        status: HistoryStatus.planned,
+                        date: DateTime.now(),
+                        type: HistoryType.trip,
+                      ),
+                    ],
                   ),
                 ],
               ),
