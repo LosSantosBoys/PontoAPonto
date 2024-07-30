@@ -6,8 +6,25 @@ import 'package:pontoaponto/core/repositories/http_repository.dart';
 class AuthService {
   final HttpRepository dio = DioRepository();
 
+  Future<bool> accountExists({required String email}) async {
+    try {
+      // TODO: Implementar a lógica de verificar se a conta existe.
+
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
   Future<ServiceReturn> createAccount({required String email, required String password}) async {
     try {
+      if (!await accountExists(email: email)) {
+        return const ServiceReturn(
+          status: ServiceStatusEnum.error,
+          message: "Conta já existe.",
+        );
+      }
+
       // TODO: Implementar a lógica de cadastro.
 
       // Simula uma requisição de cadastro.
