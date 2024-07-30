@@ -8,9 +8,11 @@ import 'package:pontoaponto/features/auth/pages/sign_up_page.dart';
 import 'package:pontoaponto/features/home/pages/history_page.dart';
 import 'package:pontoaponto/features/home/pages/home_page.dart';
 import 'package:timeago/timeago.dart' as timeago;
+import 'package:intl/date_symbol_data_local.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await initializeDateFormatting('pt_BR', null);
   timeago.setLocaleMessages('pt_BR_short', timeago.PtBrShortMessages());
   await dotenv.load(fileName: '.env');
 
