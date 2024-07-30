@@ -82,7 +82,7 @@ class HistoryTile extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            DateFormat('dd \'de\' MMMM - HH:mm', 'pt_BR').format(date),
+            DateFormat('dd \'de\' MMMM - HH:mm').format(date),
             style: const TextStyle(
               color: Colors.grey,
             ),
