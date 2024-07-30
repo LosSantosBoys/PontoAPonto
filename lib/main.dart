@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pontoaponto/features/auth/login_page.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 Future<void> main() async {
@@ -16,7 +17,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       theme: ThemeData(),
       initialRoute: '/',
-      routes: {},
+      routes: {
+        '/': (context) => const LoginPage(),
+      },
     );
   }
 }
