@@ -129,4 +129,53 @@ class AuthService {
       );
     }
   }
+
+  Future<ServiceReturn> generateOtp({required String email}) async {
+    try {
+      HttpReturn response = await dio.post('$_server/api/v1/user/signup/otp/new', {
+        "email": email,
+      });
+
+      if (response.statusCode != 200) {
+        return ServiceReturn(
+          status: ServiceStatusEnum.error,
+          message: response.data['message'],
+        );
+      }
+
+      return const ServiceReturn(
+        status: ServiceStatusEnum.success,
+      );
+    } catch (e) {
+      return const ServiceReturn(
+        status: ServiceStatusEnum.error,
+        message: "Erro ao gerar o código de verificação.",
+      );
+    }
+  }
+
+  Future<ServiceReturn> verifyOtp({required String email, required String otp}) async {
+    try {
+      HttpReturn response = await dio.post('$_server/api/v1/user/signup/otp/verify', {
+        "email": email,
+        "otp": otp,
+      });
+
+      if (response.statusCode != 200) {
+        return ServiceReturn(
+          status: ServiceStatusEnum.error,
+          message: response.data['message'],
+        );
+      }
+
+      return const ServiceReturn(
+        status: ServiceStatusEnum.success,
+      );
+    } catch (e) {
+      return const ServiceReturn(
+        status: ServiceStatusEnum.error,
+        message: "Erro ao verificar o código de verificação.",
+      );
+    }
+  }
 }
