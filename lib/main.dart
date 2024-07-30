@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pontoaponto/features/auth/login_page.dart';
+import 'package:pontoaponto/features/auth/pages/login_page.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 Future<void> main() async {
