@@ -12,6 +12,7 @@ Ponto A Ponto visa simplificar e melhorar a experiência de viagem ao combinar v
 - [Flutter](https://flutter.dev/)
 - [.NET 6.0](https://dotnet.microsoft.com/en-us/download/dotnet/6.0)
 - [MySQL](https://www.mysql.com/downloads/)
+- Arquitetura: Arquitetura modular, para um código mais limpo, organizado e escalável.
 
 ## À Fazer
 - [ ] Implementar planos de assinatura
