@@ -1,0 +1,4 @@
+enum ServiceStatusEnum {
+  success,
+  error
+}
