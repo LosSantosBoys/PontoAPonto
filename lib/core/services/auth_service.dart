@@ -1,10 +1,13 @@
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:pontoaponto/core/enum/service_status_enum.dart';
+import 'package:pontoaponto/core/models/http_return.dart';
 import 'package:pontoaponto/core/models/service_return.dart';
 import 'package:pontoaponto/core/repositories/dio_repository.dart';
 import 'package:pontoaponto/core/repositories/http_repository.dart';
 
 class AuthService {
   final HttpRepository dio = DioRepository();
+  final String _server = dotenv.env['SERVER']!;
 
   Future<bool> accountExists({required String email}) async {
     try {
@@ -16,21 +19,41 @@ class AuthService {
     }
   }
 
-  Future<ServiceReturn> createAccount({required String email, required String password}) async {
+  Future<ServiceReturn> createAccount({
+    required String name,
+    required String email,
+    required String password,
+    required String phone,
+    required String cpf,
+    required DateTime birthday,
+  }) async {
     try {
-      if (!await accountExists(email: email)) {
+      if (await accountExists(email: email)) {
         return const ServiceReturn(
           status: ServiceStatusEnum.error,
           message: "Conta já existe.",
         );
       }
 
-      // TODO: Implementar a lógica de cadastro.
+      HttpReturn response = await dio.post(
+        '$_server/api/v1/user/signup',
+        {
+          "name": name,
+          "email": email,
+          "password": password,
+          "phone": phone,
+          "cpf": cpf,
+          "birthday": birthday.toIso8601String(),
+        },
+      );
 
-      // Simula uma requisição de cadastro.
-      await Future.delayed(const Duration(seconds: 2));
+      if (response.statusCode != 200) {
+        return ServiceReturn(
+          status: ServiceStatusEnum.error,
+          message: response.data['message'],
+        );
+      }
 
-      // Simula cadastro.
       return const ServiceReturn(
         status: ServiceStatusEnum.success,
       );
