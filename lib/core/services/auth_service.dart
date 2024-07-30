@@ -50,12 +50,18 @@ class AuthService {
 
   Future<ServiceReturn> login({required String email, required String password}) async {
     try {
-      // TODO: Implementar a lógica de login.
+      HttpReturn response = await dio.post('$_server/api/v1/user/signin', {
+        "email": email,
+        "password": password,
+      });
 
-      // Simula uma requisição de login.
-      await Future.delayed(const Duration(seconds: 2));
+      if (response.statusCode != 200) {
+        return ServiceReturn(
+          status: ServiceStatusEnum.error,
+          message: response.data['message'],
+        );
+      }
 
-      // Simula um erro ao fazer login.
       return const ServiceReturn(
         status: ServiceStatusEnum.success,
       );
