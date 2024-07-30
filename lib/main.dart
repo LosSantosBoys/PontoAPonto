@@ -5,6 +5,7 @@ import 'package:pontoaponto/core/services/auth_service.dart';
 import 'package:pontoaponto/features/auth/pages/forgot_password_page.dart';
 import 'package:pontoaponto/features/auth/pages/login_page.dart';
 import 'package:pontoaponto/features/auth/pages/sign_up_page.dart';
+import 'package:pontoaponto/features/home/pages/history_page.dart';
 import 'package:pontoaponto/features/home/pages/home_page.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
@@ -26,9 +27,10 @@ class MyApp extends StatelessWidget {
         primaryColor: const Color(0xFF3755C1),
         primaryColorLight: const Color(0xFF3755C1),
         textButtonTheme: TextButtonThemeData(
-            style: TextButton.styleFrom(
-          foregroundColor: const Color(0XFF3755C1),
-        )),
+          style: TextButton.styleFrom(
+            foregroundColor: const Color(0XFF3755C1),
+          ),
+        ),
         appBarTheme: const AppBarTheme(
           titleTextStyle: TextStyle(
             fontWeight: FontWeight.bold,
@@ -93,6 +95,14 @@ class MyApp extends StatelessWidget {
         ),
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
         useMaterial3: true,
+        chipTheme: const ChipThemeData(
+          selectedColor: Color(0xFF3755C1),
+          backgroundColor: Color(0xFFF8F9FE),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(8)),
+            side: BorderSide(style: BorderStyle.none),
+          ),
+        ),
       ),
       initialRoute: '/',
       routes: {
@@ -115,6 +125,7 @@ class MyApp extends StatelessWidget {
         '/signup': (context) => const SignUpPage(),
         '/home': (context) => const HomePage(),
         '/forgot-password': (context) => ForgotPasswordPage(),
+        '/history': (context) => const HistoryPage(),
       },
     );
   }
