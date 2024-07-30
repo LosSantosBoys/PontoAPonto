@@ -10,10 +10,17 @@ environment:
   sdk: '>=3.2.0 <4.0.0'
 
 dependencies:
+  cached_network_image: ^3.3.1
   flutter:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
+  geolocator: ^11.1.0
+  google_fonts: ^6.2.1
+  google_maps_flutter: ^2.5.3
+  intl: ^0.19.0
+  permission_handler: ^11.3.1
+  timeago: ^3.7.0
 
 dev_dependencies:
   flutter_test:
