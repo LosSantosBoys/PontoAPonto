@@ -3,8 +3,42 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:pontoaponto/features/home/widgets/section.dart';
 
-class HistoryPage extends StatelessWidget {
+class HistoryPage extends StatefulWidget {
   const HistoryPage({super.key});
+
+  @override
+  State<HistoryPage> createState() => _HistoryPageState();
+}
+
+class _HistoryPageState extends State<HistoryPage> {
+  int selectedIndex = 0;
+  final PageController controller = PageController(initialPage: 0);
+
+  @override
+  void initState() {
+    super.initState();
+    controller.addListener(() {
+      if (controller.hasClients) {
+        setState(() {
+          selectedIndex = controller.page!.toInt();
+        });
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
+  void selectIndex(int index) {
+    controller.animateToPage(
+      index,
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -81,47 +115,89 @@ class HistoryPage extends StatelessWidget {
             const SizedBox(height: 10),
             const Divider(endIndent: 48, indent: 48),
             const SizedBox(height: 10),
-            DefaultTabController(
-              length: 4,
-              child: Column(
+            SizedBox(
+              height: 50,
+              child: ListView(
+                shrinkWrap: true,
+                scrollDirection: Axis.horizontal,
                 children: [
-                  const TabBar(
-                    indicator: BoxDecoration(),
-                    isScrollable: true,
-                    tabs: [
-                      Tab(child: Chip(label: Text("Todas"))),
-                      Tab(child: Chip(label: Text("Concluídas"))),
-                      Tab(child: Chip(label: Text("Canceladas"))),
-                      Tab(child: Chip(label: Text("Planejadas"))),
-                    ],
-                  ),
-                  const SizedBox(height: 10),
-                  SizedBox(
-                    height: 600,
-                    child: TabBarView(
-                      children: [
-                        // Todas
-                        ListView(
-                          shrinkWrap: true,
-                          children: [Text("Todas")],
-                        ),
-                        // Concluídas
-                        ListView(
-                          shrinkWrap: true,
-                          children: [Text("Concluídas")],
-                        ),
-                        // Canceladas
-                        ListView(
-                          shrinkWrap: true,
-                          children: [Text("Canceladas")],
-                        ),
-                        // Planejadas
-                        ListView(
-                          shrinkWrap: true,
-                          children: [Text("Planejadas")],
-                        ),
-                      ],
+                  RawChip(
+                    label: Text(
+                      "Todas",
+                      style: TextStyle(
+                        color: selectedIndex == 0 ? Colors.white : const Color(0xFF1F2024),
+                      ),
                     ),
+                    selected: selectedIndex == 0,
+                    onSelected: (value) => selectIndex(value ? 0 : selectedIndex),
+                    showCheckmark: false,
+                  ),
+                  const SizedBox(width: 10),
+                  RawChip(
+                    label: Text(
+                      "Concluídas",
+                      style: TextStyle(
+                        color: selectedIndex == 1 ? Colors.white : const Color(0xFF1F2024),
+                      ),
+                    ),
+                    selected: selectedIndex == 1,
+                    onSelected: (value) => selectIndex(value ? 1 : selectedIndex),
+                    showCheckmark: false,
+                  ),
+                  const SizedBox(width: 10),
+                  RawChip(
+                    label: Text(
+                      "Canceladas",
+                      style: TextStyle(
+                        color: selectedIndex == 2 ? Colors.white : const Color(0xFF1F2024),
+                      ),
+                    ),
+                    selected: selectedIndex == 2,
+                    onSelected: (value) => selectIndex(value ? 2 : selectedIndex),
+                    showCheckmark: false,
+                  ),
+                  const SizedBox(width: 10),
+                  RawChip(
+                    label: Text(
+                      "Planejadas",
+                      style: TextStyle(
+                        color: selectedIndex == 3 ? Colors.white : const Color(0xFF1F2024),
+                      ),
+                    ),
+                    selected: selectedIndex == 3,
+                    onSelected: (value) => selectIndex(value ? 3 : selectedIndex),
+                    showCheckmark: false,
+                  ),
+                  const SizedBox(width: 10),
+                ],
+              ),
+            ),
+            const SizedBox(height: 10),
+            SizedBox(
+              width: double.infinity,
+              height: 600,
+              child: PageView(
+                controller: controller,
+                children: [
+                  // Hoje
+                  ListView(
+                    shrinkWrap: true,
+                    children: [Text("Hoje")],
+                  ),
+                  // Ontem
+                  ListView(
+                    shrinkWrap: true,
+                    children: [Text("Ontem")],
+                  ),
+                  // Semana
+                  ListView(
+                    shrinkWrap: true,
+                    children: [Text("Semana")],
+                  ),
+                  // Mês
+                  ListView(
+                    shrinkWrap: true,
+                    children: [Text("Mês")],
                   ),
                 ],
               ),
