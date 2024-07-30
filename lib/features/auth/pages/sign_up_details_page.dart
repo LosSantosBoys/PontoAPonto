@@ -132,6 +132,7 @@ class _SignUpDetailsPageState extends State<SignUpDetailsPage> {
                         const SizedBox(height: 10),
                         TextFormField(
                           controller: nameController,
+                          textCapitalization: TextCapitalization.words,
                           keyboardType: TextInputType.name,
                           decoration: const InputDecoration(
                             hintText: 'Nome',
