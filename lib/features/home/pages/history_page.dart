@@ -187,7 +187,7 @@ class _HistoryPageState extends State<HistoryPage> {
               child: PageView(
                 controller: controller,
                 children: [
-                  // Hoje
+                  // Todas
                   ListView(
                     padding: EdgeInsets.zero,
                     shrinkWrap: true,
@@ -215,7 +215,7 @@ class _HistoryPageState extends State<HistoryPage> {
                       ),
                     ],
                   ),
-                  // Ontem
+                  // Concluídas
                   ListView(
                     padding: EdgeInsets.zero,
                     shrinkWrap: true,
@@ -229,7 +229,7 @@ class _HistoryPageState extends State<HistoryPage> {
                       ),
                     ],
                   ),
-                  // Semana
+                  // Canceladas
                   ListView(
                     padding: EdgeInsets.zero,
                     shrinkWrap: true,
@@ -243,7 +243,7 @@ class _HistoryPageState extends State<HistoryPage> {
                       ),
                     ],
                   ),
-                  // Mês
+                  // Planejadas
                   ListView(
                     padding: EdgeInsets.zero,
                     shrinkWrap: true,
