@@ -114,7 +114,11 @@ class _HomePageState extends State<HomePage> {
                                 children: [
                                   const Icon(Icons.place, size: 14, color: Colors.red),
                                   const SizedBox(width: 3),
-                                  Text(snapshot.data.toString(), style: const TextStyle(fontSize: 14)),
+                                  Text(
+                                    snapshot.data.toString(),
+                                    style: const TextStyle(fontSize: 14),
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
                                 ],
                               );
                             }
