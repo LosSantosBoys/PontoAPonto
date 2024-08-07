@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:pontoaponto/core/const.dart';
 import 'package:pontoaponto/core/services/auth_service.dart';
 import 'package:pontoaponto/features/auth/pages/forgot_password_page.dart';
+import 'package:pontoaponto/features/auth/pages/login_details_page.dart';
 import 'package:pontoaponto/features/auth/pages/login_page.dart';
 import 'package:pontoaponto/features/auth/pages/sign_up_page.dart';
 import 'package:pontoaponto/features/home/pages/history_page.dart';
@@ -151,6 +152,7 @@ class MyApp extends StatelessWidget {
               },
             ),
         '/login': (context) => const LoginPage(),
+        '/login-details': (context) => const LoginDetailsPage(),
         '/signup': (context) => const SignUpPage(),
         '/home': (context) => const HomePage(),
         '/forgot-password': (context) => ForgotPasswordPage(),
