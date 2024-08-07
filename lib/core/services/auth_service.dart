@@ -202,7 +202,10 @@ class AuthService {
 
   Future<bool> isAuthenticated() async {
     try {
-      final String? token = await storage.read(key: "token");
+      final String? token = await storage.read(
+        key: "token",
+        aOptions: _getAndroidOptions(),
+      );
 
       if (token == null) {
         return false;
