@@ -8,6 +8,7 @@ import 'package:pontoaponto/core/services/auth_service.dart';
 import 'package:pontoaponto/core/util/util.dart';
 import 'package:pontoaponto/core/widgets/custom_button.dart';
 import 'package:pontoaponto/features/auth/enum/user_type_enum.dart';
+import 'package:pontoaponto/features/auth/pages/code_confirm_page.dart';
 
 class SignUpDetailsPage extends StatefulWidget {
   const SignUpDetailsPage({super.key, required this.email, required this.password});
@@ -81,7 +82,12 @@ class _SignUpDetailsPageState extends State<SignUpDetailsPage> {
 
     if (result.status == ServiceStatusEnum.success) {
       if (context.mounted) {
-        Navigator.pushReplacementNamed(context, '/home');
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => CodeConfirmPage(email: widget.email),
+          ),
+        );
       }
     } else {
       if (context.mounted) {
