@@ -26,7 +26,7 @@ extension SnackbarExtension on BuildContext {
               color: Colors.red,
             ),
             const SizedBox(width: 10),
-            Text(message),
+            Expanded(child: Text(message)),
           ],
         ),
       ),
