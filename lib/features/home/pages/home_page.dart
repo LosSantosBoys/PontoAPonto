@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:intl/intl.dart';
@@ -18,7 +19,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  WeatherFactory wf = WeatherFactory("ea217438aba3dfb2ed23154983580800", language: Language.PORTUGUESE_BRAZIL);
+  WeatherFactory wf = WeatherFactory(dotenv.env['WEATHER_API_KEY']!, language: Language.PORTUGUESE_BRAZIL);
   double temperature = 0;
   String weatherIcon = '01d';
 
