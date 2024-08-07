@@ -43,145 +43,144 @@ class _HistoryPageState extends State<HistoryPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(vertical: 24),
-        child: Column(
-          children: [
-            Section(
-              title: "Última viagem",
-              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 24),
-              action: IconButton(
-                onPressed: () {},
-                icon: const Icon(Icons.more_vert),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // Mapa
-                  Container(
-                    height: 200,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      color: Colors.grey[300],
-                      borderRadius: BorderRadius.circular(10),
-                    ),
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          Section(
+            title: "Última viagem",
+            action: IconButton(
+              onPressed: () {},
+              icon: const Icon(Icons.more_vert),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Mapa
+                Container(
+                  height: 200,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    color: Colors.grey[300],
+                    borderRadius: BorderRadius.circular(10),
                   ),
-                  const SizedBox(height: 10),
-                  // Informações
-                  const Text(
-                    "Endereço de origem",
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
+                ),
+                const SizedBox(height: 10),
+                // Informações
+                const Text(
+                  "Endereço de origem",
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
                   ),
-                  const SizedBox(height: 10),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                ),
+                const SizedBox(height: 10),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text("R\$ 21.00", style: TextStyle(fontSize: 14)),
+                        SizedBox(height: 3),
+                        Text("24 de Abril - 12:00", style: TextStyle(fontSize: 14)),
+                      ],
+                    ),
+                    const SizedBox(width: 10),
+                    ElevatedButton(
+                      onPressed: () {},
+                      style: ElevatedButton.styleFrom(
+                        elevation: 0,
+                        backgroundColor: const Color(0xFFF8F9FE),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                          side: const BorderSide(color: Color(0xFFE8E9F1), width: 1),
+                        ),
+                      ),
+                      child: const Row(
                         children: [
-                          Text("R\$ 21.00", style: TextStyle(fontSize: 14)),
-                          SizedBox(height: 3),
-                          Text("24 de Abril - 12:00", style: TextStyle(fontSize: 14)),
+                          Text(
+                            "Remarcar",
+                            style: TextStyle(color: Color(0xFF1F2024)),
+                          ),
+                          SizedBox(width: 5),
+                          Icon(
+                            Icons.replay,
+                            color: Color(0xFF1F2024),
+                          ),
                         ],
                       ),
-                      const SizedBox(width: 10),
-                      ElevatedButton(
-                        onPressed: () {},
-                        style: ElevatedButton.styleFrom(
-                          elevation: 0,
-                          backgroundColor: const Color(0xFFF8F9FE),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8),
-                            side: const BorderSide(color: Color(0xFFE8E9F1), width: 1),
-                          ),
-                        ),
-                        child: const Row(
-                          children: [
-                            Text(
-                              "Remarcar",
-                              style: TextStyle(color: Color(0xFF1F2024)),
-                            ),
-                            SizedBox(width: 5),
-                            Icon(
-                              Icons.replay,
-                              color: Color(0xFF1F2024),
-                            ),
-                          ],
+                    ),
+                  ],
+                )
+              ],
+            ),
+          ),
+          const SizedBox(height: 10),
+          Section(
+            padding: EdgeInsets.zero,
+            titleWidget: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 24),
+              child: SizedBox(
+                height: 50,
+                child: ListView(
+                  shrinkWrap: true,
+                  scrollDirection: Axis.horizontal,
+                  padding: EdgeInsets.zero,
+                  children: [
+                    RawChip(
+                      label: Text(
+                        "Todas",
+                        style: TextStyle(
+                          color: selectedIndex == 0 ? Colors.white : const Color(0xFF1F2024),
                         ),
                       ),
-                    ],
-                  )
-                ],
+                      selected: selectedIndex == 0,
+                      onSelected: (value) => selectIndex(value ? 0 : selectedIndex),
+                      showCheckmark: false,
+                    ),
+                    const SizedBox(width: 10),
+                    RawChip(
+                      label: Text(
+                        "Concluídas",
+                        style: TextStyle(
+                          color: selectedIndex == 1 ? Colors.white : const Color(0xFF1F2024),
+                        ),
+                      ),
+                      selected: selectedIndex == 1,
+                      onSelected: (value) => selectIndex(value ? 1 : selectedIndex),
+                      showCheckmark: false,
+                    ),
+                    const SizedBox(width: 10),
+                    RawChip(
+                      label: Text(
+                        "Canceladas",
+                        style: TextStyle(
+                          color: selectedIndex == 2 ? Colors.white : const Color(0xFF1F2024),
+                        ),
+                      ),
+                      selected: selectedIndex == 2,
+                      onSelected: (value) => selectIndex(value ? 2 : selectedIndex),
+                      showCheckmark: false,
+                    ),
+                    const SizedBox(width: 10),
+                    RawChip(
+                      label: Text(
+                        "Planejadas",
+                        style: TextStyle(
+                          color: selectedIndex == 3 ? Colors.white : const Color(0xFF1F2024),
+                        ),
+                      ),
+                      selected: selectedIndex == 3,
+                      onSelected: (value) => selectIndex(value ? 3 : selectedIndex),
+                      showCheckmark: false,
+                    ),
+                    const SizedBox(width: 10),
+                  ],
+                ),
               ),
             ),
-            const SizedBox(height: 10),
-            const Divider(endIndent: 48, indent: 48),
-            const SizedBox(height: 10),
-            SizedBox(
-              height: 50,
-              child: ListView(
-                shrinkWrap: true,
-                scrollDirection: Axis.horizontal,
-                padding: const EdgeInsets.symmetric(horizontal: 24),
-                children: [
-                  RawChip(
-                    label: Text(
-                      "Todas",
-                      style: TextStyle(
-                        color: selectedIndex == 0 ? Colors.white : const Color(0xFF1F2024),
-                      ),
-                    ),
-                    selected: selectedIndex == 0,
-                    onSelected: (value) => selectIndex(value ? 0 : selectedIndex),
-                    showCheckmark: false,
-                  ),
-                  const SizedBox(width: 10),
-                  RawChip(
-                    label: Text(
-                      "Concluídas",
-                      style: TextStyle(
-                        color: selectedIndex == 1 ? Colors.white : const Color(0xFF1F2024),
-                      ),
-                    ),
-                    selected: selectedIndex == 1,
-                    onSelected: (value) => selectIndex(value ? 1 : selectedIndex),
-                    showCheckmark: false,
-                  ),
-                  const SizedBox(width: 10),
-                  RawChip(
-                    label: Text(
-                      "Canceladas",
-                      style: TextStyle(
-                        color: selectedIndex == 2 ? Colors.white : const Color(0xFF1F2024),
-                      ),
-                    ),
-                    selected: selectedIndex == 2,
-                    onSelected: (value) => selectIndex(value ? 2 : selectedIndex),
-                    showCheckmark: false,
-                  ),
-                  const SizedBox(width: 10),
-                  RawChip(
-                    label: Text(
-                      "Planejadas",
-                      style: TextStyle(
-                        color: selectedIndex == 3 ? Colors.white : const Color(0xFF1F2024),
-                      ),
-                    ),
-                    selected: selectedIndex == 3,
-                    onSelected: (value) => selectIndex(value ? 3 : selectedIndex),
-                    showCheckmark: false,
-                  ),
-                  const SizedBox(width: 10),
-                ],
-              ),
-            ),
-            const SizedBox(height: 10),
-            SizedBox(
+            child: SizedBox(
               width: double.infinity,
               height: 600,
               child: PageView(
@@ -260,8 +259,8 @@ class _HistoryPageState extends State<HistoryPage> {
                 ],
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
