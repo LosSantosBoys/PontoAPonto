@@ -58,9 +58,10 @@ class AuthService {
 
   Future<ServiceReturn> login({required String email, required String password}) async {
     try {
-      HttpReturn response = await dio.post('$_server/api/v1/user/signin', {
+      HttpReturn response = await dio.post('$_server/api/v1/signin', {
         "email": email,
         "password": password,
+        "userType": 0,
       });
 
       if (response.statusCode != 200) {
@@ -89,10 +90,6 @@ class AuthService {
 
   Future<ServiceReturn> logout() async {
     try {
-      // TODO: Implementar a lógica de logout.
-
-      // Simula uma requisição de logout.
-      await Future.delayed(const Duration(seconds: 2));
       await storage.delete(key: "token");
 
       // Simula logout.
@@ -155,11 +152,11 @@ class AuthService {
 
   Future<ServiceReturn> generateOtp({required String email}) async {
     try {
-      HttpReturn response = await dio.post('$_server/api/v1/user/signup/otp/new', {
+      HttpReturn response = await dio.patch('$_server/api/v1/signup/otp/new', {
         "email": email,
       });
 
-      if (response.statusCode != 200) {
+      if (response.statusCode != 204) {
         return ServiceReturn(
           status: ServiceStatusEnum.error,
           message: response.data['message'],
@@ -179,13 +176,13 @@ class AuthService {
 
   Future<ServiceReturn> verifyOtp({required String email, required String otp}) async {
     try {
-      HttpReturn response = await dio.post('$_server/api/v1/signup/validate', {
+      HttpReturn response = await dio.patch('$_server/api/v1/signup/otp/validate', {
         "email": email,
         "otp": otp,
         "userType": 0,
       });
 
-      if (response.statusCode != 200) {
+      if (response.statusCode != 204) {
         return ServiceReturn(
           status: ServiceStatusEnum.error,
           message: response.data['message'],
