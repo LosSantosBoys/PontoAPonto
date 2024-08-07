@@ -7,6 +7,7 @@ import 'package:pontoaponto/features/auth/pages/login_page.dart';
 import 'package:pontoaponto/features/auth/pages/sign_up_page.dart';
 import 'package:pontoaponto/features/home/pages/history_page.dart';
 import 'package:pontoaponto/features/home/pages/home_page.dart';
+import 'package:pontoaponto/features/onboarding/pages/plan_page.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:intl/date_symbol_data_local.dart';
 
@@ -128,6 +129,7 @@ class MyApp extends StatelessWidget {
         '/home': (context) => const HomePage(),
         '/forgot-password': (context) => ForgotPasswordPage(),
         '/history': (context) => const HistoryPage(),
+        '/plan': (context) => const PlanPage(),
       },
     );
   }
