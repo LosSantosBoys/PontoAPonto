@@ -8,6 +8,7 @@ import 'package:pontoaponto/features/auth/pages/sign_up_page.dart';
 import 'package:pontoaponto/features/home/pages/history_page.dart';
 import 'package:pontoaponto/features/home/pages/home_page.dart';
 import 'package:pontoaponto/features/onboarding/pages/plan_page.dart';
+import 'package:pontoaponto/features/settings/pages/settings_page.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:intl/date_symbol_data_local.dart';
 
@@ -41,6 +42,8 @@ class MyApp extends StatelessWidget {
             color: Color(0xFF1F2024),
           ),
           titleSpacing: 24,
+          backgroundColor: Colors.white,
+          elevation: 0
         ),
         textTheme: GoogleFonts.interTextTheme(
           Theme.of(context).textTheme,
@@ -130,6 +133,7 @@ class MyApp extends StatelessWidget {
         '/forgot-password': (context) => ForgotPasswordPage(),
         '/history': (context) => const HistoryPage(),
         '/plan': (context) => const PlanPage(),
+        '/settings': (context) => const SettingsPage()
       },
     );
   }
