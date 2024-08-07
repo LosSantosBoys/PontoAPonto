@@ -77,7 +77,7 @@ class _SignUpDetailsPageState extends State<SignUpDetailsPage> {
       cpf: cpfCnpjController.text.trim(),
       name: nameController.text.trim(),
       phone: phoneController.text.trim(),
-      isDriver: userType.index != 1,
+      isDriver: userType.name != "user",
     );
 
     if (result.status == ServiceStatusEnum.success) {
