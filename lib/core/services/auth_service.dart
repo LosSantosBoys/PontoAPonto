@@ -1,5 +1,6 @@
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:intl/intl.dart';
 import 'package:pontoaponto/core/enum/service_status_enum.dart';
 import 'package:pontoaponto/core/models/http_options.dart';
 import 'package:pontoaponto/core/models/http_return.dart';
@@ -20,21 +21,24 @@ class AuthService {
     required String phone,
     required String cpf,
     required DateTime birthday,
+    required bool isDriver,
   }) async {
+    DateFormat formatter = DateFormat('dd-MM-yyyy');
+
     try {
       HttpReturn response = await dio.post(
-        '$_server/api/v1/user/signup',
+        '$_server/api/v1/signup${isDriver ? '/driver' : '/user'}',
         {
           "name": name,
           "email": email,
           "password": password,
-          "phone": phone,
-          "cpf": cpf,
-          "birthday": birthday.toIso8601String(),
+          "phone": phone.replaceAll(RegExp('[^a-zA-Z0-9]'), ''),
+          "cpf": cpf.replaceAll(RegExp('[^a-zA-Z0-9]'), ''),
+          "birthday": formatter.format(birthday),
         },
       );
 
-      if (response.statusCode != 200) {
+      if (response.statusCode != 201) {
         return ServiceReturn(
           status: ServiceStatusEnum.error,
           message: response.data['message'],
