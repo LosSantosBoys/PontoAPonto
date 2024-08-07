@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pontoaponto/core/const.dart';
 
 class AccountPage extends StatelessWidget {
   const AccountPage({super.key});
@@ -29,7 +30,7 @@ class AccountPage extends StatelessWidget {
                 Text(
                   // TODO: Substituir por dados reais
                   "Nome Sobrenome",
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontWeight: FontWeight.w600,
                   ),
                 ),
@@ -39,13 +40,6 @@ class AccountPage extends StatelessWidget {
             TextField(
               controller: TextEditingController(text: "Nome Sobrenome"),
               readOnly: true,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderSide: BorderSide.none,
-                  borderRadius: BorderRadius.circular(6),
-                ),
-                fillColor: const Color(0xFFF8F9FE),
-              ),
             ),
             const SizedBox(height: 10),
             const Row(
@@ -63,15 +57,10 @@ class AccountPage extends StatelessWidget {
             TextField(
               controller: TextEditingController(text: "email"),
               readOnly: true,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderSide: BorderSide.none,
-                  borderRadius: BorderRadius.circular(6),
-                ),
-                fillColor: const Color(0xFFF8F9FE),
-                suffixIcon: const Icon(
+              decoration: const InputDecoration(
+                suffixIcon: Icon(
                   Icons.error_outline,
-                  color: Colors.red,
+                  color: ThemeColors.errorDarkest,
                   semanticLabel: "Status de verificação de e-mail: verificado.",
                 ),
               ),
@@ -89,7 +78,7 @@ class AccountPage extends StatelessWidget {
               width: double.infinity,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.red,
+                  backgroundColor: ThemeColors.errorDarkest,
                 ),
                 onPressed: () {
                   showDialog(
@@ -109,8 +98,7 @@ class AccountPage extends StatelessWidget {
                         ),
                         actions: [
                           TextButton(
-                            // TODO: Implementar ação de cancelar
-                            onPressed: () {},
+                            onPressed: () => Navigator.pop(context),
                             child: const Text("Cancelar"),
                           ),
                           TextButton(
@@ -118,7 +106,7 @@ class AccountPage extends StatelessWidget {
                             onPressed: () {},
                             child: const Text(
                               "Deletar conta",
-                              style: TextStyle(color: Colors.red),
+                              style: TextStyle(color: ThemeColors.errorDarkest),
                             ),
                           ),
                         ],
