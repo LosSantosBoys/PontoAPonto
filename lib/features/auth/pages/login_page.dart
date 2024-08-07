@@ -48,7 +48,7 @@ class LoginPage extends StatelessWidget {
                 const SizedBox(height: 10),
                 const SocialButton(type: SocialEnum.meta, enabled: false),
                 const SizedBox(height: 10),
-                CustomButton(text: "Login", onPressed: () {}),
+                CustomButton(text: "Login", onPressed: () => Navigator.pushNamed(context, "/login-details")),
               ],
             ),
             TextButton(
