@@ -7,6 +7,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:intl/intl.dart';
 import 'package:pontoaponto/core/util/util.dart';
 import 'package:pontoaponto/features/home/enum/service_enum.dart';
+import 'package:pontoaponto/features/home/pages/history_page.dart';
 import 'package:pontoaponto/features/home/widgets/section.dart';
 import 'package:pontoaponto/features/home/widgets/service_button.dart';
 import 'package:weather/weather.dart';
@@ -22,6 +23,8 @@ class _HomePageState extends State<HomePage> {
   WeatherFactory wf = WeatherFactory(dotenv.env['WEATHER_API_KEY']!, language: Language.PORTUGUESE_BRAZIL);
   double temperature = 0;
   String weatherIcon = '01d';
+  late PageController _pageController;
+  int currentPage = 0;
 
   String formatDateTime(DateTime date) {
     DateFormat formatter = DateFormat('EEEE, d \'de\' MMMM', 'pt_BR');
@@ -67,6 +70,18 @@ class _HomePageState extends State<HomePage> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    _pageController = PageController();
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFF8F9FE),
@@ -80,98 +95,111 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
-      body: Column(
+      body: PageView(
+        padEnds: false,
+        pageSnapping: true,
+        controller: _pageController,
+        onPageChanged: (index) {
+          setState(() {
+            currentPage = index;
+          });
+        },
         children: [
-          Section(
-            padding: const EdgeInsets.symmetric(horizontal: 24),
-            title: "Clima e Tempo",
-            action: IconButton(
-              onPressed: () {},
-              icon: const Icon(Icons.more_vert),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
+          Column(
+            children: [
+              Section(
+                padding: const EdgeInsets.symmetric(horizontal: 24),
+                title: "Clima e Tempo",
+                action: IconButton(
+                  onPressed: () {},
+                  icon: const Icon(Icons.more_vert),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("${temperature.toStringAsFixed(1)}°C", style: const TextStyle(fontSize: 23)),
-                    const SizedBox(width: 15),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                    Row(
                       children: [
-                        Text(formatDateTime(DateTime.now()), style: const TextStyle(fontSize: 14)),
-                        FutureBuilder(
-                          future: getCity(),
-                          builder: (BuildContext context, AsyncSnapshot snapshot) {
-                            if (snapshot.connectionState == ConnectionState.waiting) {
-                              return const Row(
-                                children: [
-                                  Icon(Icons.place, size: 14, color: Colors.grey),
-                                  SizedBox(width: 3),
-                                  Text("Carregando...", style: TextStyle(fontSize: 14)),
-                                ],
-                              );
-                            } else if (snapshot.hasError) {
-                              WidgetsBinding.instance.addPostFrameCallback(
-                                (_) => context.showErrorSnackbar(snapshot.error.toString()),
-                              );
+                        Text("${temperature.toStringAsFixed(1)}°C", style: const TextStyle(fontSize: 23)),
+                        const SizedBox(width: 15),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(formatDateTime(DateTime.now()), style: const TextStyle(fontSize: 14)),
+                            FutureBuilder(
+                              future: getCity(),
+                              builder: (BuildContext context, AsyncSnapshot snapshot) {
+                                if (snapshot.connectionState == ConnectionState.waiting) {
+                                  return const Row(
+                                    children: [
+                                      Icon(Icons.place, size: 14, color: Colors.grey),
+                                      SizedBox(width: 3),
+                                      Text("Carregando...", style: TextStyle(fontSize: 14)),
+                                    ],
+                                  );
+                                } else if (snapshot.hasError) {
+                                  WidgetsBinding.instance.addPostFrameCallback(
+                                    (_) => context.showErrorSnackbar(snapshot.error.toString()),
+                                  );
 
-                              return const Text("Desconhecido", style: TextStyle(fontSize: 14));
-                            } else {
-                              return Row(
-                                children: [
-                                  const Icon(Icons.place, size: 14, color: Colors.red),
-                                  const SizedBox(width: 3),
-                                  Text(
-                                    snapshot.data.toString(),
-                                    style: const TextStyle(fontSize: 14),
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                ],
-                              );
-                            }
-                          },
+                                  return const Text("Desconhecido", style: TextStyle(fontSize: 14));
+                                } else {
+                                  return Row(
+                                    children: [
+                                      const Icon(Icons.place, size: 14, color: Colors.red),
+                                      const SizedBox(width: 3),
+                                      Text(
+                                        snapshot.data.toString(),
+                                        style: const TextStyle(fontSize: 14),
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ],
+                                  );
+                                }
+                              },
+                            ),
+                          ],
                         ),
                       ],
                     ),
+                    CachedNetworkImage(
+                      imageUrl: "https://openweathermap.org/img/wn/$weatherIcon@2x.png",
+                      width: 36,
+                      height: 36,
+                    ),
                   ],
                 ),
-                CachedNetworkImage(
-                  imageUrl: "https://openweathermap.org/img/wn/$weatherIcon@2x.png",
-                  width: 36,
-                  height: 36,
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(height: 10),
-          Section(
-            padding: const EdgeInsets.symmetric(horizontal: 24),
-            title: "Serviços Principais",
-            action: RichText(
-              text: TextSpan(
-                text: "ver todos",
-                style: const TextStyle(color: Colors.blue),
-                recognizer: TapGestureRecognizer()
-                  ..onTap = () {
-                    // TODO: redirecionar para a tela de serviços
-                  },
               ),
-            ),
-            child: Wrap(
-              spacing: 16,
-              runSpacing: 10,
-              children: [
-                ServiceButton(service: ServiceEnum.rentals, enabled: false),
-                ServiceButton(service: ServiceEnum.deliveries, enabled: false),
-                ServiceButton(service: ServiceEnum.flights, enabled: false),
-                ServiceButton(service: ServiceEnum.rides),
-                ServiceButton(service: ServiceEnum.public, enabled: false),
-                const SizedBox(width: 36),
-                ServiceButton(service: ServiceEnum.offers, enabled: false),
-              ],
-            ),
+              const SizedBox(height: 10),
+              Section(
+                padding: const EdgeInsets.symmetric(horizontal: 24),
+                title: "Serviços Principais",
+                action: RichText(
+                  text: TextSpan(
+                    text: "ver todos",
+                    style: const TextStyle(color: Colors.blue),
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = () {
+                        // TODO: redirecionar para a tela de serviços
+                      },
+                  ),
+                ),
+                child: Wrap(
+                  spacing: 16,
+                  runSpacing: 10,
+                  children: [
+                    ServiceButton(service: ServiceEnum.rentals, enabled: false),
+                    ServiceButton(service: ServiceEnum.deliveries, enabled: false),
+                    ServiceButton(service: ServiceEnum.flights, enabled: false),
+                    ServiceButton(service: ServiceEnum.rides),
+                    ServiceButton(service: ServiceEnum.public, enabled: false),
+                    const SizedBox(width: 36),
+                    ServiceButton(service: ServiceEnum.offers, enabled: false),
+                  ],
+                ),
+              ),
+            ],
           ),
+          const HistoryPage(),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -183,7 +211,14 @@ class _HomePageState extends State<HomePage> {
         unselectedLabelStyle: const TextStyle(fontSize: 14),
         showSelectedLabels: true,
         showUnselectedLabels: true,
-        enableFeedback: false,
+        currentIndex: currentPage,
+        onTap: (int index) {
+          _pageController.animateToPage(
+            index,
+            duration: const Duration(milliseconds: 300),
+            curve: Curves.easeInOut,
+          );
+        },
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
