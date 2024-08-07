@@ -173,16 +173,6 @@ class _HomePageState extends State<HomePage> {
               Section(
                 padding: const EdgeInsets.symmetric(horizontal: 24),
                 title: "Serviços Principais",
-                action: RichText(
-                  text: TextSpan(
-                    text: "ver todos",
-                    style: const TextStyle(color: Colors.blue),
-                    recognizer: TapGestureRecognizer()
-                      ..onTap = () {
-                        // TODO: redirecionar para a tela de serviços
-                      },
-                  ),
-                ),
                 child: Wrap(
                   spacing: 16,
                   runSpacing: 10,
