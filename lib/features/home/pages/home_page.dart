@@ -1,5 +1,4 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:geocoding/geocoding.dart';
@@ -214,11 +213,6 @@ class _HomePageState extends State<HomePage> {
             icon: Icon(Icons.home_outlined),
             activeIcon: Icon(Icons.home),
             label: "Início",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.apps_outlined),
-            activeIcon: Icon(Icons.apps),
-            label: "Serviços",
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.receipt_outlined),
