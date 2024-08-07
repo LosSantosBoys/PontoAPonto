@@ -179,9 +179,10 @@ class AuthService {
 
   Future<ServiceReturn> verifyOtp({required String email, required String otp}) async {
     try {
-      HttpReturn response = await dio.post('$_server/api/v1/user/signup/otp/verify', {
+      HttpReturn response = await dio.post('$_server/api/v1/signup/validate', {
         "email": email,
         "otp": otp,
+        "userType": 0,
       });
 
       if (response.statusCode != 200) {
