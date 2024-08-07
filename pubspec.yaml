@@ -25,6 +25,7 @@ dependencies:
   permission_handler: ^11.3.1
   timeago: ^3.7.0
   geocoding: ^3.0.0
+  weather: ^3.1.1
 
 dev_dependencies:
   flutter_test:
