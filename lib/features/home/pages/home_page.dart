@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
@@ -7,6 +8,7 @@ import 'package:pontoaponto/core/util/util.dart';
 import 'package:pontoaponto/features/home/enum/service_enum.dart';
 import 'package:pontoaponto/features/home/widgets/section.dart';
 import 'package:pontoaponto/features/home/widgets/service_button.dart';
+import 'package:weather/weather.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -16,6 +18,10 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  WeatherFactory wf = WeatherFactory("ea217438aba3dfb2ed23154983580800", language: Language.PORTUGUESE_BRAZIL);
+  double temperature = 0;
+  String weatherIcon = '01d';
+
   String formatDateTime(DateTime date) {
     DateFormat formatter = DateFormat('EEEE, d \'de\' MMMM', 'pt_BR');
     return formatter.format(date).capitalize();
@@ -47,15 +53,16 @@ class _HomePageState extends State<HomePage> {
 
     try {
       List<Placemark> placemarks = await placemarkFromCoordinates(position.latitude, position.longitude);
-      return placemarks[0].subAdministrativeArea ?? placemarks[0].administrativeArea ?? placemarks[0].country ?? 'Desconhecido';
+
+      String place = placemarks[0].subAdministrativeArea ?? placemarks[0].administrativeArea ?? placemarks[0].country ?? 'Desconhecido';
+      Weather w = await wf.currentWeatherByLocation(position.latitude, position.longitude);
+      temperature = w.temperature?.celsius ?? 0;
+      weatherIcon = w.weatherIcon ?? '01d';
+
+      return place;
     } catch (e) {
       return Future.error('Erro ao obter a cidade.');
     }
-  }
-
-  @override
-  void initState() {
-    super.initState();
   }
 
   @override
@@ -86,7 +93,7 @@ class _HomePageState extends State<HomePage> {
               children: [
                 Row(
                   children: [
-                    const Text("24°C", style: TextStyle(fontSize: 23)),
+                    Text("${temperature.toStringAsFixed(1)}°C", style: const TextStyle(fontSize: 23)),
                     const SizedBox(width: 15),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -100,7 +107,7 @@ class _HomePageState extends State<HomePage> {
                                 children: [
                                   Icon(Icons.place, size: 14, color: Colors.grey),
                                   SizedBox(width: 3),
-                                  Text("Carregando...", style: const TextStyle(fontSize: 14)),
+                                  Text("Carregando...", style: TextStyle(fontSize: 14)),
                                 ],
                               );
                             } else if (snapshot.hasError) {
@@ -128,10 +135,10 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ],
                 ),
-                const Icon(
-                  Icons.cloud,
-                  size: 36,
-                  color: Color(0xFF3755C1),
+                CachedNetworkImage(
+                  imageUrl: "https://openweathermap.org/img/wn/$weatherIcon@2x.png",
+                  width: 36,
+                  height: 36,
                 ),
               ],
             ),
