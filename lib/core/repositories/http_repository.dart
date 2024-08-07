@@ -8,4 +8,5 @@ abstract class HttpRepository {
   Future<HttpReturn> delete(String url, {HttpOptions? options});
   Future<HttpReturn> download(String url, String savePath, {HttpOptions? options});
   Future<HttpReturn> getUri(Uri uri, {HttpOptions? options});
+  Future<HttpReturn> patch(String url, dynamic body, {HttpOptions? options});
 }

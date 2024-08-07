@@ -148,4 +148,21 @@ class DioRepository implements HttpRepository {
       );
     }
   }
+
+  @override
+  Future<HttpReturn> patch(String url, body, {HttpOptions? options}) async {
+    try {
+      final Response<dynamic> response = await dio.patch(url, data: body, options: options);
+
+      return HttpReturn(
+        statusCode: response.statusCode,
+        data: response.data,
+      );
+    } on DioException catch (e) {
+      return HttpReturn(
+        statusCode: e.response?.statusCode ?? 400,
+        data: e.response?.data,
+      );
+    }
+  }
 }
