@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+import 'package:pontoaponto/core/const.dart';
 import 'package:pontoaponto/core/enum/service_status_enum.dart';
 import 'package:pontoaponto/core/models/service_return.dart';
 import 'package:pontoaponto/core/services/auth_service.dart';
 import 'package:pontoaponto/core/util/util.dart';
 import 'package:pontoaponto/core/widgets/custom_button.dart';
+import 'package:pontoaponto/features/auth/enum/user_type_enum.dart';
 
 class SignUpDetailsPage extends StatefulWidget {
   const SignUpDetailsPage({super.key, required this.email, required this.password});
@@ -21,8 +23,9 @@ class _SignUpDetailsPageState extends State<SignUpDetailsPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController nameController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
-  final TextEditingController cpfController = TextEditingController();
+  final TextEditingController cpfCnpjController = TextEditingController();
   final TextEditingController birthdayController = TextEditingController();
+  UserTypeEnum userType = UserTypeEnum.user;
   DateTime? pickedBirthday;
   final MaskTextInputFormatter phoneFormatter = MaskTextInputFormatter(
     mask: "(##) #####-####",
@@ -30,6 +33,10 @@ class _SignUpDetailsPageState extends State<SignUpDetailsPage> {
   );
   final MaskTextInputFormatter cpfFormatter = MaskTextInputFormatter(
     mask: "###.###.###-##",
+    filter: {"#": RegExp(r'[0-9]')},
+  );
+  final MaskTextInputFormatter cnpjFormatter = MaskTextInputFormatter(
+    mask: "##.###.###/####-##",
     filter: {"#": RegExp(r'[0-9]')},
   );
 
@@ -66,9 +73,10 @@ class _SignUpDetailsPageState extends State<SignUpDetailsPage> {
       email: widget.email,
       password: widget.password,
       birthday: pickedBirthday!,
-      cpf: cpfController.text.trim(),
+      cpf: cpfCnpjController.text.trim(),
       name: nameController.text.trim(),
       phone: phoneController.text.trim(),
+      isDriver: userType.index != 1,
     );
 
     if (result.status == ServiceStatusEnum.success) {
@@ -180,30 +188,71 @@ class _SignUpDetailsPageState extends State<SignUpDetailsPage> {
                     ),
                   ),
                   const SizedBox(height: 5),
-                  // CPF
+                  // Motorista ou Uusário
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 10),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
-                          "CPF",
-                          style: TextStyle(
+                        RadioListTile<UserTypeEnum>(
+                          title: const Text("Motorista"),
+                          value: UserTypeEnum.driver,
+                          groupValue: userType,
+                          fillColor: WidgetStateProperty.all(ThemeColors.primaryDarkest),
+                          tileColor: const Color(0xFFFAFAFA),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          onChanged: (UserTypeEnum? value) {
+                            setState(() {
+                              userType = value!;
+                            });
+                          },
+                        ),
+                        const SizedBox(height: 5),
+                        RadioListTile<UserTypeEnum>(
+                          title: const Text("Usuário"),
+                          value: UserTypeEnum.user,
+                          groupValue: userType,
+                          fillColor: WidgetStateProperty.all(ThemeColors.primaryDarkest),
+                          tileColor: const Color(0xFFFAFAFA),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          onChanged: (UserTypeEnum? value) {
+                            setState(() {
+                              userType = value!;
+                            });
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 5),
+                  // CPF ou CNPJ
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          userType == UserTypeEnum.driver ? "CNPJ" : "CPF",
+                          style: const TextStyle(
                             fontWeight: FontWeight.w700,
                             fontSize: 16,
                           ),
                         ),
                         const SizedBox(height: 10),
                         TextFormField(
-                          controller: cpfController,
+                          controller: cpfCnpjController,
                           keyboardType: TextInputType.number,
-                          inputFormatters: [cpfFormatter],
-                          decoration: const InputDecoration(
-                            hintText: 'CPF',
+                          inputFormatters: [userType == UserTypeEnum.driver ? cnpjFormatter : cpfFormatter],
+                          decoration: InputDecoration(
+                            hintText: userType == UserTypeEnum.driver ? "CNPJ" : 'CPF',
                           ),
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return 'Por favor, insira seu CPF.';
+                              return 'Por favor, insira seu ${userType == UserTypeEnum.driver ? "CNPJ" : "CPF"}.';
                             }
 
                             return null;
