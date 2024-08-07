@@ -207,7 +207,7 @@ class _HomePageState extends State<HomePage> {
         selectedItemColor: const Color(0xFF3755C1),
         iconSize: 28,
         unselectedItemColor: const Color(0xFF71727A),
-        selectedLabelStyle: const TextStyle(fontSize: 14),
+        selectedLabelStyle: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
         unselectedLabelStyle: const TextStyle(fontSize: 14),
         showSelectedLabels: true,
         showUnselectedLabels: true,
@@ -221,19 +221,23 @@ class _HomePageState extends State<HomePage> {
         },
         items: const [
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
+            icon: Icon(Icons.home_outlined),
+            activeIcon: Icon(Icons.home),
             label: "Início",
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.apps_outlined),
+            activeIcon: Icon(Icons.apps),
             label: "Serviços",
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.receipt_outlined),
+            activeIcon: Icon(Icons.receipt),
             label: "Atividade",
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person_outline),
+            activeIcon: Icon(Icons.person),
             label: "Perfil",
           ),
         ],
