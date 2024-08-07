@@ -40,6 +40,20 @@ class _CodeConfirmPageState extends State<CodeConfirmPage> {
     }
   }
 
+  Future<void> _resendCode(BuildContext context) async {
+    final ServiceReturn result = await AuthService().generateOtp(email: widget.email);
+
+    if (result.status == ServiceStatusEnum.success) {
+      if (context.mounted) {
+        context.showSuccessSnackbar("Código de verificação reenviado com sucesso.");
+      }
+    } else {
+      if (context.mounted) {
+        context.showErrorSnackbar(result.message ?? "Erro ao reenviar o código de verificação.");
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -87,6 +101,11 @@ class _CodeConfirmPageState extends State<CodeConfirmPage> {
                   return null;
                 },
               ),
+            ),
+            const SizedBox(height: 20),
+            TextButton(
+              onPressed: () async => await _resendCode(context),
+              child: const Text("Reenviar código"),
             ),
           ],
         ),
