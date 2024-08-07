@@ -22,6 +22,7 @@ class SettingsPage extends StatelessWidget {
               SettingsTile(
                 title: const Text("Conta"),
                 leading: const Icon(Icons.account_circle_outlined),
+                onPressed: (context) => Navigator.of(context).pushNamed("/account"),
               ),
               SettingsTile(
                 title: const Text("Idioma"),
