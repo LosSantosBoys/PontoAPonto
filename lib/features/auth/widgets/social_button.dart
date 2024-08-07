@@ -26,9 +26,8 @@ class SocialButton extends StatelessWidget {
           : null,
       style: TextButton.styleFrom(
         minimumSize: const Size(double.infinity, 44),
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(8),
           side: const BorderSide(
             color: Color(0xFFD9D9D9),
             width: 1,
@@ -47,8 +46,6 @@ class SocialButton extends StatelessWidget {
             "Entrar com ${type.name.capitalize()}",
             style: TextStyle(
               color: enabled ? null : Colors.grey,
-              fontSize: 16,
-              fontWeight: FontWeight.w500,
             ),
           ),
           const Spacer(),
