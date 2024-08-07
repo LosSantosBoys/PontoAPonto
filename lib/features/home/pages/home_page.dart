@@ -174,6 +174,35 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
+      bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Colors.white,
+        selectedItemColor: const Color(0xFF3755C1),
+        iconSize: 28,
+        unselectedItemColor: const Color(0xFF71727A),
+        selectedLabelStyle: const TextStyle(fontSize: 14),
+        unselectedLabelStyle: const TextStyle(fontSize: 14),
+        showSelectedLabels: true,
+        showUnselectedLabels: true,
+        enableFeedback: false,
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: "Início",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.apps_outlined),
+            label: "Serviços",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.receipt_outlined),
+            label: "Atividade",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person_outline),
+            label: "Perfil",
+          ),
+        ],
+      ),
     );
   }
 }
