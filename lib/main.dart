@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:pontoaponto/core/const.dart';
 import 'package:pontoaponto/core/services/auth_service.dart';
 import 'package:pontoaponto/features/auth/pages/forgot_password_page.dart';
 import 'package:pontoaponto/features/auth/pages/login_page.dart';
@@ -29,25 +30,41 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-        primaryColor: const Color(0xFF3755C1),
-        primaryColorLight: const Color(0xFF3755C1),
+        primaryColor: ThemeColors.primaryDarkest,
+        primaryColorLight: ThemeColors.primaryDark,
         textButtonTheme: TextButtonThemeData(
           style: TextButton.styleFrom(
-            foregroundColor: const Color(0XFF3755C1),
+            foregroundColor: ThemeColors.primaryDarkest,
           ),
         ),
         appBarTheme: const AppBarTheme(
-          titleTextStyle: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 20,
-            color: Color(0xFF1F2024),
-          ),
-          titleSpacing: 24,
-          backgroundColor: Colors.white,
-          elevation: 0
-        ),
+            titleTextStyle: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 20,
+              color: Color(0xFF1F2024),
+            ),
+            titleSpacing: 24,
+            backgroundColor: Colors.white,
+            elevation: 0),
         textTheme: GoogleFonts.interTextTheme(
           Theme.of(context).textTheme,
+        ),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: ThemeColors.primaryDarkest,
+            elevation: 0,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
+              side: BorderSide.none,
+            ),
+            textStyle: const TextStyle(
+              color: ThemeColors.neutralLightLightest,
+              fontWeight: FontWeight.w600,
+            ),
+            foregroundColor: ThemeColors.neutralLightLightest,
+            disabledForegroundColor: ThemeColors.neutralLightDarkest,
+            disabledBackgroundColor: ThemeColors.neutralLightMedium,
+          ),
         ),
         fontFamily: GoogleFonts.inter().fontFamily,
         snackBarTheme: const SnackBarThemeData(
@@ -55,8 +72,13 @@ class MyApp extends StatelessWidget {
           contentTextStyle: TextStyle(color: Color(0xFF1F2024)),
         ),
         inputDecorationTheme: InputDecorationTheme(
-          fillColor: const Color(0xFFFAFAFA),
+          fillColor: ThemeColors.neutralLightLight,
           filled: true,
+          hintStyle: const TextStyle(
+            color: ThemeColors.neutralDarkLightest,
+            fontWeight: FontWeight.w300,
+            fontSize: 13,
+          ),
           contentPadding: const EdgeInsets.symmetric(horizontal: 10),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8),
@@ -69,30 +91,30 @@ class MyApp extends StatelessWidget {
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8),
             borderSide: const BorderSide(
-              color: Color(0XFF8395d6),
+              color: ThemeColors.primaryLightest,
               width: 2,
             ),
           ),
           focusedErrorBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8),
             borderSide: const BorderSide(
-              color: Color(0XFFFFADB9),
+              color: ThemeColors.errorMedium,
               width: 2,
             ),
           ),
           disabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8),
             borderSide: const BorderSide(
-              color: Color(0xFFC7C7CA),
+              color: ThemeColors.neutralLightDarkest,
             ),
           ),
           errorStyle: const TextStyle(
-            color: Color(0XFFE30000),
+            color: ThemeColors.errorDarkest,
           ),
           errorBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8),
             borderSide: const BorderSide(
-              color: Color(0XFFE30000),
+              color: ThemeColors.errorDarkest,
             ),
           ),
         ),
