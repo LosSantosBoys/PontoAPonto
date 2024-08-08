@@ -106,7 +106,7 @@ class AuthService {
 
   Future<ServiceReturn> deleteAccount() async {
     try {
-      HttpReturn response = await dio.delete('$_server/api/v1/user/me/delete');
+      HttpReturn response = await dio.delete('$_server/api/v1/user/profile/me/delete');
 
       if (response.statusCode != 200) {
         return ServiceReturn(
@@ -212,8 +212,8 @@ class AuthService {
       }
 
       HttpReturn response = await dio.get(
-        '$_server/api/v1/user/me',
-        options: HttpOptions(headers: {"token": token}),
+        '$_server/api/v1/user/profile/me',
+        options: HttpOptions(headers: {"Bearer token": token}),
       );
 
       if (response.statusCode != 200) {
