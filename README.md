@@ -47,7 +47,7 @@ flutter run
 Se você tiver alguma dúvida ou sugestão, por favor reporte no [issue tracker](https://github.com/LosSantosBoys/PontoAPonto/issues).
 
 ## Licença
-Este projeto está licenciado sob a licença X - veja o arquivo [LICENSE](LICENSE) para detalhes.
+Este projeto está licenciado sob a licença GNU General Public License v2.0 - veja o arquivo [LICENSE](LICENSE) para detalhes.
 
 ## Autores
 - [Bernardo Nascimento](https://www.linkedin.com/in/bernardo-alvesdev/) - [GitHub](https://github.com/BernardoAlvesDev)
